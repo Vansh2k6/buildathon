@@ -15,3 +15,7 @@ Thumbs.db
 # agent/session state & machine-local harness config
 .freebuff/
 .claude/settings.local.json
+
+# local logs
+dev-server.log
+*.log

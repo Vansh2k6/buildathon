@@ -1,8 +1,27 @@
 {
+  "name": "merchant-agent",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "probe:razorpay": "tsx scripts/smoke-razorpay.ts",
+    "probe:news": "tsx scripts/smoke-news.ts",
+    "probe:groq": "tsx scripts/smoke-groq.ts"
+  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.4"
+    "@supabase/supabase-js": "^2.112.4",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "tsx": "^4.23.12"
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tsx": "^4.23.12",
+    "typescript": "^5"
   }
 }
