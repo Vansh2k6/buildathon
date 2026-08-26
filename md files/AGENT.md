@@ -301,10 +301,10 @@ This rule is **not** redundant with `MAX_DISCOUNT_PCT`, and it is worth demonstr
 
 | Product | price | cost | Ceiling binds at | Margin floor binds at | Which rule blocks first |
 | --- | --- | --- | --- | --- | --- |
-| `TEA-001` | ₹499 | ₹300 | 20% | 29.3% | `MAX_DISCOUNT_PCT` |
-| `OIL-004` | ₹999 | ₹750 | 20% | **11.7%** | `MIN_MARGIN_PCT` |
+| `BK-101` | ₹499 | ₹300 | 20% | 29.3% | `MAX_DISCOUNT_PCT` |
+| `BK-103` | ₹999 | ₹750 | 20% | **11.7%** | `MIN_MARGIN_PCT` |
 
-A 15% discount on `OIL-004` is inside the merchant's headline ceiling and still correctly refused, because it would leave a 12% margin against a 15% floor. Two independent limits, both real.
+A 15% discount on `BK-103` is inside the merchant's headline ceiling and still correctly refused, because it would leave a 12% margin against a 15% floor. Two independent limits, both real.
 
 ### 5.3 `DAILY_DISCOUNT_BUDGET` — projected give-away
 
@@ -380,7 +380,7 @@ Every line reads without JSON (FR-32). Raw payloads sit behind a toggle for anyo
 
 ## 8. Worked example — trigger T1 end to end
 
-Seeded state: `TEA-001` at ₹499, cost ₹300, inventory 42, no active discount, no discount in the last 7 days, 0 actions today, ₹0 give-away committed today, 2 featured products.
+Seeded state: `BK-101` at ₹499, cost ₹300, inventory 42, no active discount, no discount in the last 7 days, 0 actions today, ₹0 give-away committed today, 2 featured products.
 
 | Step | What happens |
 | --- | --- |
@@ -391,7 +391,7 @@ Seeded state: `TEA-001` at ₹499, cost ₹300, inventory 42, no active discount
 | **Decide (2)** | Retry block supplies `MAX_DISCOUNT_PCT = 20`. → `{action:"discount", sku:"TEA-001", discount_pct:18, confidence:0.78, …}` |
 | **Policy (2)** | 6: `18 ≤ 20` ✓ · 7: `sale=₹409.18, margin=₹109.18 = 26.7% ≥ 15%` ✓ · 8 cooldown ✓ · 9: `0+1 ≤ 3` ✓ · 10: `0 < 5` ✓ · 11: `expected_units=4`, `projected = ₹89.82 × 4 = ₹359.28 ≤ ₹5,000` ✓ · 12 n/a → **APPROVED** |
 | **Execute** | Razorpay test-mode artifact per the [ARCHITECTURE §6.2](ARCHITECTURE.md) ladder; `discounts` row `active`, `pct=18`, `run_id` linked |
-| **Result** | Storefront: `TEA-001` shows ~~₹499~~ **₹409** with an 18% badge. Audit shows all six phases including the rejection |
+| **Result** | Storefront: `BK-101` shows ~~₹499~~ **₹409** with an 18% badge. Audit shows all six phases including the rejection |
 | **Elapsed** | Two model calls + one Razorpay call ≈ 6–10s, inside the 15s budget (NFR-2) |
 
 The rejection at step 4 is the load-bearing moment of the whole demo: a specific number the model wanted, a specific number the merchant set, and code — visible, boring, un-bypassable — choosing between them.

@@ -272,3 +272,17 @@ Where AI **is** used, and only here: judging what a fired signal warrants, and j
 **Consequences.** The domain list lives as a constant in `lib/observe/external.ts` — widening coverage is a one-string edit. `everything` returns article-search metadata rather than curated front-page slots, so titles skew noisier; irrelevant here, because relevance judgement was always the model's job ([ADR-007](#adr-007)). Quota spend moves to the `everything` endpoint at pageSize 20 per external cycle.
 
 **Rejected.** (a) Paid NewsAPI tier — cost buys prestige, not a demo beat. (b) RSS scraping of the same outlets — leaves the sanctioned API and adds parser maintenance. (c) Keep `top-headlines` and wait for a geo expansion — a demo-critical path cannot rest on a maybe.
+
+---
+
+<a id="adr-019"></a>
+## ADR-019 — The merchant is a bookstore; featured-first public surfaces
+**Status:** accepted (user direction, 2026-08-26)
+
+**Context.** The generic catalog needed a trend-bait SKU per headline bet. Books exist for every category — monsoon travelogues, cricket, wellness/AQI, heatwave thrillers — so re-domaining the merchant as a bookstore makes every external signal plausibly matchable and retires more of R3 for free. Separately: build the bookstore first, wire the agent afterwards.
+
+**Decision.** Catalog re-domained to 10 books (`BK-101…BK-110`) with identical load-bearing numbers ([RULES.md DET-3](RULES.md)). Public surfaces: `/` renders Featured as hero with Collections beneath; `/browse` is the full filterable grid; `/collections/[category]` is the same grid pre-filtered. Judge surfaces (`/audit`, `/policy`, `/control`) unchanged. `products` gains `author` and `cover_url`. A real book dataset lands later via `scripts/import-books.ts`; until then placeholder fixtures ship. Agent wiring to curate Featured is explicitly deferred — when it arrives it flows through the existing policy-gated feature execution (FEATURED_SLOTS), never direct writes.
+
+**Consequences.** The bookstore is watchable before Phases 2–6 exist — a deliberate plan reorder that trades schedule risk for an early real surface; policy/decide/execute phases themselves are unchanged. Effective-price computation stays in exactly one module (`lib/catalog.ts`) shared by pages and, later, `/api/catalog`. Seeded baseline features two titles so the hero is never empty before the agent runs.
+
+**Rejected.** (a) Plain bookstore without the agent — loses the submission's thesis (bounded autonomy). (b) Single-page tabs — the user asked for distinct browse/collection routes. (c) Inventing a brand identity — PRODUCT.md's no-brand commitment stands; "Demo Merchant" sells books now.

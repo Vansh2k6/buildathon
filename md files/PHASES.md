@@ -90,7 +90,7 @@ Five points where you stop and check rather than drift forward. A gate is a **bi
 **Purpose.** A database that holds the demo's state and a simulated clock that can be rewound.
 
 - **Entry:** G0 passed.
-- **Exit:** `npm run dev` serves a page; importing `serverAdmin()` in a client component fails loudly; RLS on with `anon` holding `select` only and **no write policy anywhere**; reset → day 0 → advance to day 8 fires exactly one conversion drop, on `TEA-001`; reset is idempotent.
+- **Exit:** `npm run dev` serves a page; importing `serverAdmin()` in a client component fails loudly; RLS on with `anon` holding `select` only and **no write policy anywhere**; reset → day 0 → advance to day 8 fires exactly one conversion drop, on `BK-101`; reset is idempotent.
 - **True after:** state is reproducible. Retakes become free ([ADR-004](DECISIONS.md)).
 - **Still not true:** nothing observes, decides, or acts.
 - **If you stop here:** no submission.
@@ -113,7 +113,7 @@ Five points where you stop and check rather than drift forward. A gate is a **bi
 - **Live risk:** none material. This phase is pure code with no integrations, which is precisely why it is early.
 - **Not yet:** do not wire it into anything. Do not import it from a route.
 
-> `OIL-004` earns its five extra minutes at G1: it proves the margin floor is **not** redundant with the discount ceiling. 15% is comfortably under the 20% ceiling and still refused, because the margin binds at 11.7%. That single case is the difference between a policy engine and an `if`.
+> `BK-103` earns its five extra minutes at G1: it proves the margin floor is **not** redundant with the discount ceiling. 15% is comfortably under the 20% ceiling and still refused, because the margin binds at 11.7%. That single case is the difference between a policy engine and an `if`.
 
 ---
 

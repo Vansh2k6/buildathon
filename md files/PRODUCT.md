@@ -36,7 +36,7 @@ Second, narrower position: the product exposes a machine-readable catalog and a 
 - Buildathon prototype. Planning basis: one builder, ~30 focused hours, three days.
 - **The deliverable is a ~4-minute screen recording, not a running service.** Judges get no live URL; a short README exists so anyone can run it locally.
 - `localhost` only. This also satisfies NewsAPI's free-tier localhost restriction at no cost.
-- **Four surfaces:** storefront `/`, audit `/audit`, policy `/policy`, control `/control`.
+- **Six routes, one bookstore:** home `/` (featured hero + collections below), `/browse` full filterable catalog, `/collections/[category]`; judge surfaces `/audit`, `/policy`, `/control`. The merchant sells books — chosen so every trend bet has plausible inventory ([ADR-019](DECISIONS.md)).
 - The entire demo is driven from the control page. A terminal appears on camera exactly once, for the AI-buyer script.
 - Simulated time is an integer day index advanced by hand, so a scripted scenario fires identically on every recording take.
 - Because evaluation happens by watching a recording, on-screen numbers must survive video compression and be readable at recording zoom. This is an operating fact, not a preference.

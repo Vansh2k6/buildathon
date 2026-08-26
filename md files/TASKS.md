@@ -56,9 +56,9 @@ Nothing in this phase is app code. The goal is to convert three unknowns into wr
 | ID | Task | Dep | Est | Done when |
 | --- | --- | --- | --- | --- |
 | T-10 | `create-next-app` (TS, App Router), install `@supabase/supabase-js` (+ `tsx` for probe scripts; Groq needs no SDK — OpenAI-compatible REST via `fetch`, [ADR-017](DECISIONS.md)). Strip boilerplate | — | 0.5 | `npm run dev` serves a blank page |
-| T-11 | `lib/db.ts` — `serverAdmin()` (throws if `typeof window !== 'undefined'`) and `publicRead()` | T-10 | 0.5 | Importing `serverAdmin` in a client component fails loudly (NFR-4) |
+| T-11 | `lib/db.ts` — `serverAdmin()` (throws if `typeof window !== 'undefined'`) and `publicRead()` | T-10 | 0.5 | Calling `serverAdmin()` from client-side code throws loudly (NFR-4) |
 | T-12 | Run `db/001_schema.sql` + `db/002_policies.sql` in the Supabase SQL editor | T-01 | 0.5 | All tables exist; RLS on; `anon` has `select` only, no write policy anywhere |
-| T-13 | `db/003_seed.sql` — catalog + metrics fixtures per §7 | T-12 | 1.0 | Reset → day 0 → advancing to day 8 fires exactly one conversion drop, on `TEA-001` |
+| T-13 | `db/003_seed.sql` — catalog + metrics fixtures per §7 | T-12 | 1.0 | Reset → day 0 → advancing to day 8 fires exactly one conversion drop, on `BK-101` |
 | T-14 | `/api/sim/advance-day` and `/api/sim/reset` | T-13 | 0.5 | Reset is idempotent and restores day 0 exactly (AC-3) |
 
 ---
@@ -73,7 +73,7 @@ Nothing in this phase is app code. The goal is to convert three unknowns into wr
 | T-23 | `lib/policy/buyer.ts` — 5 buyer rules from [AGENT §5.4], same `Verdict` type | T-20 | 0.5 | Identical return type; `BUYER_PRICE_INTEGRITY` implemented |
 | T-24 | Bare-bones assertion tests (a plain `.ts` script is fine) covering the exact numbers in [AGENT §5.2] and §8 | T-22, T-23 | 0.5 | `TEA-001 @ 30%` → `MAX_DISCOUNT_PCT`; `TEA-001 @ 18%` → approved; **`OIL-004 @ 15%` → `MIN_MARGIN_PCT`**; budget and cooldown cases pass |
 
-The `OIL-004` case in T-24 is worth the five extra minutes: it proves the margin floor is not redundant with the discount ceiling, which is the difference between a real policy engine and a single `if`.
+The `BK-103` case in T-24 is worth the five extra minutes: it proves the margin floor is not redundant with the discount ceiling, which is the difference between a real policy engine and a single `if`.
 
 ---
 
@@ -122,7 +122,7 @@ The `OIL-004` case in T-24 is worth the five extra minutes: it proves the margin
 | ID | Task | Dep | Est | Done when |
 | --- | --- | --- | --- | --- |
 | T-69 | Establish the visual world before building: run `/impeccable shape storefront` (or plain new-work), which writes `DESIGN.md`. Covers type, palette, spacing, and component vocabulary for all four surfaces at once | T-13 | 1.0 | `DESIGN.md` exists and names the tokens the four surfaces share |
-| T-70 | `app/page.tsx` storefront — grid, discount badges with struck-through original, Featured section by rank. `force-dynamic`, no cache | T-61, T-62, T-69 | 2.5 | Reads Supabase directly; **zero fixture JSON in the component** (FR-2); refresh after a cycle shows the change (FR-5) |
+| T-70 | Bookstore public surfaces (pulled forward 2026-08-26, [ADR-019](DECISIONS.md)): `/` featured hero + collections, `/browse` full filterable grid, `/collections/[category]`. Discount badges with struck-through original. `force-dynamic`, no cache | T-13 | 3.0 | Reads Supabase directly; **zero fixture JSON in the component** (FR-2); refresh after a cycle shows the change (FR-5) |
 | T-71 | `app/audit/page.tsx` — newest-first runs, phase-ordered events, raw-payload toggle. **The surface judges spend the most time on** — the `BLOCKED` line is the single most important element in the build | T-52, T-69 | 2.5 | Rejected runs are as visually prominent as executed ones (FR-33); a viewer understands a rejection in under 20s (NFR-7) |
 | T-72 | `app/policy/page.tsx` — read-only render of the `merchant_policy` row with each limit labelled by its rule ID | T-12, T-69 | 1.0 | A judge can point at `max_discount_pct = 20` and then at the rejection that cites it |
 | T-73 | `app/control/page.tsx` — Advance day · Run internal · Run external · Reset, with current day index shown | T-14, T-50, T-69 | 2.0 | Whole demo drivable from one page; no terminal needed on camera |
@@ -143,24 +143,24 @@ The `OIL-004` case in T-24 is worth the five extra minutes: it proves the margin
 
 The scripted data is a demo artifact and deserves specification rather than improvisation.
 
-### Catalog — 10 products
+### Catalog — 10 books
 
-| SKU | Name | Category | Price | Cost | Inv | Role in the demo |
+| SKU | Title · Author | Category | Price | Cost | Inv | Role in the demo |
 | --- | --- | --- | --- | --- | --- | --- |
-| `TEA-001` | Assam Breakfast Tea 250g | beverages | ₹499 | ₹300 | 42 | **T1 target** — carries the scripted conversion drop |
-| `OIL-004` | Cold-Pressed Groundnut Oil 1L | grocery | ₹999 | ₹750 | 30 | **Margin-floor demo** — 15% is under the ceiling and still refused |
-| `RAIN-002` | Compact Monsoon Umbrella | outdoor | ₹649 | ₹300 | 55 | **Trend bait** — late-August monsoon coverage is near-certain in Indian headlines |
-| `JRSY-003` | Team India Cricket Jersey | apparel | ₹1,299 | ₹700 | 60 | **Trend bait** — cricket appears in Indian top-headlines year-round |
-| `AIRP-005` | HEPA Room Air Purifier | appliances | ₹8,499 | ₹6,000 | 12 | Trend bait (AQI stories); also near the buyer order cap |
-| `SUNS-006` | SPF50 Sunscreen 100ml | personal care | ₹599 | ₹280 | 80 | Trend bait (heatwave) |
-| `BOTL-007` | Insulated Steel Bottle 750ml | outdoor | ₹899 | ₹450 | 3 | **`STOCK_FLOOR` demo** — inventory 3 < 5, cannot be discounted |
-| `NOTE-008` | A5 Dotted Notebook | stationery | ₹299 | ₹120 | 65 | Filler / dead-stock candidate |
-| `MUG-009` | Ceramic Mug 350ml | homeware | ₹399 | ₹180 | 48 | **Dead stock** — 0 orders across the trailing 7 days |
-| `SOCK-010` | Cotton Crew Socks 3-pack | apparel | ₹349 | ₹150 | 90 | Filler |
+| `BK-101` | The Assam Tea Planter's Daughter · R. Baruah | fiction | ₹499 | ₹300 | 42 | **T1 target** — carries the scripted conversion drop |
+| `BK-102` | Monsoon Notes: A Kerala Travelogue · A. Menon | travel | ₹649 | ₹300 | 55 | **Trend bait** — late-August monsoon coverage is near-certain |
+| `BK-103` | Breathe Easy: Indoor Air and Health · Dr. S. Rao | wellness | ₹999 | ₹750 | 30 | **Margin-floor demo** (imported edition) — also AQI trend bait |
+| `BK-104` | The Republic of Cricket · V. Iyer | sports | ₹1,299 | ₹700 | 60 | **Trend bait** — cricket appears in headlines year-round |
+| `BK-105` | The Heatwave Protocol · N. Kapoor | thriller | ₹599 | ₹280 | 80 | **Trend bait** (heatwave) |
+| `BK-106` | Atlas of the Indian Ocean · collectif | gift | ₹8,499 | ₹6,000 | 12 | Premium gift edition near the buyer order cap |
+| `BK-107` | Field Guide to the Western Ghats, 2nd ed. · K. Bhat | nature | ₹899 | ₹450 | 3 | **`STOCK_FLOOR` demo** — inventory 3 < 5, cannot be discounted |
+| `BK-108` | A5 Dotted Reading Journal · Pagemill Press | stationery | ₹299 | ₹120 | 65 | Filler |
+| `BK-109` | Selected Verses: Volume III · various | poetry | ₹399 | ₹180 | 48 | **Dead stock** — 0 orders across the trailing 7 days |
+| `BK-110` | Best of Indian Short Stories · anthology | fiction | ₹349 | ₹150 | 90 | Filler |
 
-Two of these earn their place by making rules visible rather than by selling: `OIL-004` demonstrates `MIN_MARGIN_PCT`, `BOTL-007` demonstrates `STOCK_FLOOR`. Trend bait is disclosed on camera — a seeded catalog is what a real merchant's catalog *is*.
+Two earn their place by making rules visible rather than by selling: `BK-103` demonstrates `MIN_MARGIN_PCT`, `BK-107` demonstrates `STOCK_FLOOR`. Trend bait is disclosed on camera — a seeded catalog is what a real merchant's catalog *is*. Placeholder fixtures until the real book dataset lands via `scripts/import-books.ts` (`data/books.json`); load-bearing numbers above are frozen ([RULES.md DET-3](RULES.md)) and any imported dataset must map onto them or re-open this spec.
 
-### `TEA-001` metric curve
+### `BK-101` metric curve
 
 | Day | 1 | 2 | 3 | 4 | 5 | 6 | 7 | **8** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -170,7 +170,7 @@ Two of these earn their place by making rules visible rather than by selling: `O
 
 Baseline ≈ 4.23% → `drop_rel ≈ 60%`, comfortably over the 30% threshold, with `views = 180` well clear of the 50-view guard. Every other SKU holds a flat curve across days 1–8 so **exactly one** signal fires (`also_firing: 0`).
 
-`MUG-009` carries `views ≈ 40/day, orders = 0` throughout, so the dead-stock detector has a target on any day the drop is not scheduled.
+`BK-109` carries `views ≈ 40/day, orders = 0` throughout, so the dead-stock detector has a target on any day the drop is not scheduled.
 
 ---
 

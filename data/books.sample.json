@@ -1,0 +1,22 @@
+[
+  {
+    "sku": "BK-101",
+    "title": "The Assam Tea Planter's Daughter",
+    "author": "R. Baruah",
+    "category": "fiction",
+    "priceInr": 499,
+    "costInr": 300,
+    "inventory": 42,
+    "description": "A family saga of love and land on a colonial Assam tea estate."
+  },
+  {
+    "sku": "BK-102",
+    "title": "Monsoon Notes: A Kerala Travelogue",
+    "author": "A. Menon",
+    "category": "travel",
+    "priceInr": 649,
+    "costInr": 300,
+    "inventory": 55,
+    "coverUrl": null
+  }
+]

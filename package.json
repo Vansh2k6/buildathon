@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "probe:razorpay": "tsx scripts/smoke-razorpay.ts",
     "probe:news": "tsx scripts/smoke-news.ts",
-    "probe:groq": "tsx scripts/smoke-groq.ts"
+    "probe:groq": "tsx scripts/smoke-groq.ts",
+    "books:import": "tsx scripts/import-books.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

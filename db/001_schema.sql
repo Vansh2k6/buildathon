@@ -9,6 +9,8 @@ create table products (
   sku           text not null unique,
   name          text not null,
   description   text not null,
+  author        text not null default '',
+  cover_url     text,
   category      text not null,
   price_p       integer not null check (price_p > 0),      -- list price, paise
   cost_p        integer not null check (cost_p >= 0),      -- unit cost -> margin floor

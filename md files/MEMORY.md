@@ -55,6 +55,7 @@ Eight documents, ~2,200 lines. Each owns a different kind of fact. [RULES.md §0
 | Supabase project | Created; keys in `.env.local` |
 | API keys | Obtained 2026-08-26 — Supabase · Groq · NewsAPI · Razorpay test mode |
 | Smoke-groq probe (T-04) | Written and 429-hardened; model set to `openai/gpt-oss-120b`. Final determinism double-run **pending** free-tier rate-limit refresh |
+| Bookstore pivot (2026-08-26) | Merchant re-domained to books ([ADR-019](DECISIONS.md)); `/`=featured hero+collections, `/browse` filters, `/collections/[cat]`. User supplies real dataset later via `scripts/import-books.ts`; agent wiring for Featured comes after |
 | `DESIGN.md` | Not created. It is produced by **T-69**, which gates all UI work |
 | Docs | 8 files complete, listed above |
 | Tooling | Impeccable design skill installed (§7) |

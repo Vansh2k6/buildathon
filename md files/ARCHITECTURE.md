@@ -24,8 +24,10 @@
 
 ```
                         ┌──────────────── browser (localhost) ────────────────┐
-                        │   /            /audit           /policy   /control   │
-                        │ storefront   audit trail       limits    triggers    │
+                        │      /         /browse    /collections/[cat]        │
+                        │   hero+cols   all books     category page            │
+                        │      /audit      /policy      /control               │
+                        │     audit       limits       triggers                │
                         └───────┬──────────┬────────────────┬─────────┬────────┘
                                 │ read     │ read           │ read    │ POST
                                 ▼          ▼                ▼         ▼
@@ -67,7 +69,10 @@
 ```
 merchant-agent/
 ├── app/
-│   ├── page.tsx                     # storefront (FR-2..FR-5) — server component, reads DB
+│   ├── page.tsx                     # bookstore home: featured hero + collections
+│   ├── browse/page.tsx              # full catalog grid with filters (FR-2..FR-5)
+│   ├── collections/[category]/page.tsx # one collection, same grid filtered
+│   ├── components/BookCard.tsx      # cover, author, struck-through price, badge
 │   ├── audit/page.tsx               # audit narrative (FR-32..FR-35)
 │   ├── policy/page.tsx              # merchant limits, read-only view of the row code enforces
 │   ├── control/page.tsx             # demo cockpit: Advance day, Run internal, Run external, Reset
@@ -128,6 +133,8 @@ create table products (
   sku           text not null unique,
   name          text not null,
   description   text not null,
+  author        text not null default '',
+  cover_url     text,
   category      text not null,
   price_p       integer not null check (price_p > 0),      -- list price, paise
   cost_p        integer not null check (cost_p >= 0),      -- unit cost -> margin floor
@@ -287,9 +294,10 @@ This is the contract an external AI shopping agent codes against. Stable, self-d
   "policy_summary": { "max_qty_per_sku": 5, "max_order_value_inr": 25000 },
   "products": [
     {
-      "sku": "TEA-001",
-      "name": "Assam Breakfast Tea 250g",
-      "category": "beverages",
+      "sku": "BK-101",
+      "name": "The Assam Tea Planter's Daughter",
+      "author": "R. Baruah",
+      "category": "fiction",
       "description": "...",
       "list_price_inr": 499,
       "effective_price_inr": 424,

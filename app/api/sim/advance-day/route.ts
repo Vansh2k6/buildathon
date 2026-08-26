@@ -9,6 +9,10 @@ export async function POST() {
   try {
     const { data, error } = await serverAdmin().rpc('demo_advance_day');
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (data === null || data === undefined) {
+      // sim_state row missing — seed (db/003_seed.sql) has not been applied.
+      return NextResponse.json({ error: 'sim_state missing — apply db/003_seed.sql' }, { status: 500 });
+    }
     return NextResponse.json({ dayIndex: data });
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : 'advance failed' }, { status: 500 });
