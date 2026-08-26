@@ -41,7 +41,9 @@ set search_path = public
 as $$
   -- effects of past runs go first (FK order handled by listing them together)
   truncate agent_events, agent_runs, discounts, orders, news_cache;
-  delete from product_metrics_daily;
+  -- "where true" satisfies pg-safeupdate, which Supabase enforces on API-role
+  -- executions even inside security definer functions.
+  delete from product_metrics_daily where true;
 
   -- BK-101 scripted curve, days 1–8 (TASKS.md §10)
   insert into product_metrics_daily (product_id, day_index, views, orders, revenue_p)
