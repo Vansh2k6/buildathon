@@ -1,0 +1,17 @@
+# Secrets — never commit (SEC-6)
+.env*
+!.env.local.example
+
+# deps / builds
+node_modules/
+.next/
+dist/
+*.tsbuildinfo
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# agent/session state & machine-local harness config
+.freebuff/
+.claude/settings.local.json
