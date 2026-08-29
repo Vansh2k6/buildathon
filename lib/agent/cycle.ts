@@ -9,7 +9,9 @@ import { detectInternalSignal } from '@/lib/observe/internal';
 import { detectExternalSignal } from '@/lib/observe/external';
 import type { Signal } from '@/lib/observe/types';
 import { proposeAction } from '@/lib/decide/propose';
-import { evaluate } from '@/lib/policy/engine';
+import { executeDiscount } from '@/lib/execute/discount';
+import { executeFeatured } from '@/lib/execute/featured';
+import { executeOrder } from '@/lib/execute/order';
 import type { AgentWorldFacts, MerchantPolicyLimits, ProductFact, Proposal, Verdict } from '@/lib/policy/types';
 import {
   createAgentRun,
@@ -342,6 +344,19 @@ export async function runAgentCycle(
       discount_pct: approved.discount_pct,
       stubbed: true,
     };
+  } else {
+    if (approved.kind === 'discount' || approved.kind === 'discount_and_feature') {
+      const dRes = await executeDiscount(approved, runId, currentDay, { db });
+      executionPayload = dRes;
+    }
+    if (approved.kind === 'feature' || approved.kind === 'discount_and_feature') {
+      const fRes = await executeFeatured(approved, { db });
+      executionPayload = { ...(executionPayload ?? {}), ...fRes };
+    }
+    if (approved.kind === 'buyer_order') {
+      const oRes = await executeOrder(approved, runId, { db });
+      executionPayload = oRes;
+    }
   }
 
   const execMsg = renderExecuteTemplate(executionPayload);
