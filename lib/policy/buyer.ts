@@ -5,6 +5,7 @@
  * Our effective prices are authoritative: the total and the approved per-unit
  * prices are computed here, never taken from the buyer (BUYER_PRICE_INTEGRITY).
  */
+import { effectivePriceP } from '../money';
 import { BUYER_RULES, orderTotalP } from './rules';
 import { approve, type ApprovedAction, type BuyerOrderProposal, type MerchantPolicyLimits, type RuleId, type Verdict } from './types';
 import type { BuyerFacts } from './rules';
@@ -27,9 +28,7 @@ export function evaluateBuyerOrder(order: BuyerOrderProposal, policy: MerchantPo
 
   const lines = order.lines.map((line) => {
     const product = facts.catalog[line.sku];
-    const unitPriceP = product.active_discount_pct === null
-      ? product.price_p
-      : Math.floor((product.price_p * (100 - product.active_discount_pct)) / 100);
+    const unitPriceP = effectivePriceP(product.price_p, product.active_discount_pct);
     return { sku: line.sku, qty: line.qty, unit_price_p: unitPriceP };
   });
 

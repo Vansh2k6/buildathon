@@ -6,6 +6,7 @@
  * stops at the first violation so the audit names exactly one cause (NFR-7).
  * No imports from decide/, no network, no Supabase — facts arrive as arguments.
  */
+import { effectivePriceP } from '../money';
 import type {
   AgentRuleId,
   AgentWorldFacts,
@@ -39,11 +40,7 @@ export interface BuyerFacts {
   catalog: Record<string, ProductFact>;
 }
 
-/** Integer-paise effective price under an active discount percentage. */
-export function effectivePriceP(priceP: number, discountPct: number | null): number {
-  if (discountPct === null) return priceP;
-  return Math.floor((priceP * (100 - discountPct)) / 100);
-}
+export { effectivePriceP };
 
 /** AGENT.md §5.3 — projected give-away for one new discount, in paise. */
 export function projectedGiveawayP(priceP: number, discountPct: number, recentDailyOrders: number[]): {

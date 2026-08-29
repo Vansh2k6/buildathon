@@ -22,14 +22,7 @@ export type Book = {
   discount_pct: number | null; // active discount, joined from discounts
 };
 
-/** Integer-paise effective price under an active discount percentage. */
-export function effectivePriceP(priceP: number, discountPct: number): number {
-  return Math.floor((priceP * (100 - discountPct)) / 100);
-}
-
-export function formatInr(paise: number): string {
-  return `₹${(paise / 100).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
-}
+export { effectivePriceP, formatInr } from '@/lib/money';
 
 type Row = Omit<Book, 'discount_pct'> & { id: string };
 
@@ -87,7 +80,7 @@ export async function listBooks(query: BrowseQuery): Promise<Book[]> {
     // PostgREST or=() syntax: commas separate conditions, parens group, % and _
     // are ilike wildcards. Strip them so a search term can't split or inject the
     // filter (FR-2).
-    const term = q.replace(/[,()%]/g, ' ').trim();
+    const term = q.replace(/[,()%\\'";]/g, ' ').trim();
     if (term) req = req.or(`name.ilike.%${term}%,author.ilike.%${term}%`);
   }
   if (query.category) req = req.eq('category', query.category);
