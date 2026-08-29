@@ -37,13 +37,33 @@ async function main(): Promise<void> {
   // ── 1. seed present ────────────────────────────────────────────────
   const { data: books, error: e1 } = await admin.from('products').select('*').order('sku');
   if (e1) throw new Error(e1.message);
-  check('catalog has 10 books', books!.length === 10, `found ${books!.length}`);
-
-  const featured = books!.filter((b) => b.is_featured);
+  // Seed fixtures must exist alongside whatever else was imported (ADR-019:
+  // the real dataset lands on top of the placeholder world).
+  const SEED_SKUS = ['BK-101', 'BK-102', 'BK-103', 'BK-104', 'BK-105', 'BK-106', 'BK-107', 'BK-108', 'BK-109', 'BK-110'];
+  const missingSeed = SEED_SKUS.filter((s) => !books!.some((b) => b.sku === s));
   check(
-    'featured baseline is exactly two titles ranked 1,2',
-    featured.length === 2 && featured.every((b) => b.featured_rank === 1 || b.featured_rank === 2),
-    JSON.stringify(featured.map((f) => f.sku)),
+    'seed fixtures present (BK-101…110) alongside any imported catalog',
+    missingSeed.length === 0,
+    missingSeed.length ? `missing ${missingSeed.join(',')}` : `catalog total ${books!.length}`,
+  );
+
+  // The shelf must satisfy the merchant row — unique ranks within the slot cap,
+  // T1 hero at slot 1 — however it was curated. Curation may change WHICH titles;
+  // it may not violate the policy.
+  const { data: slotRow, error: slotErr } = await admin
+    .from('merchant_policy')
+    .select('max_featured_slots')
+    .eq('id', 1)
+    .single();
+  if (slotErr) throw new Error(slotErr.message);
+  const maxSlots = (slotRow as { max_featured_slots: number }).max_featured_slots;
+  const featured = books!.filter((b) => b.is_featured);
+  const ranks = featured.map((f) => f.featured_rank as number).sort((a, b) => a - b);
+  const ranksOk = ranks.every((r, i) => Number.isInteger(r) && r >= 1 && r <= maxSlots && (i === 0 || ranks[i - 1] !== r));
+  check(
+    `featured shelf is policy-compliant (≤ ${maxSlots} slots, unique ranks, hero at 1)`,
+    featured.length <= maxSlots && ranksOk && featured.find((f) => f.sku === 'BK-101')?.featured_rank === 1,
+    JSON.stringify(featured.map((f) => [f.sku, f.featured_rank])),
   );
 
   const bk101 = books!.find((b) => b.sku === 'BK-101');
@@ -74,19 +94,35 @@ async function main(): Promise<void> {
     .from('product_metrics_daily')
     .select('*', { count: 'exact', head: true });
   if (mcErr) throw new Error(mcErr.message);
-  check('metrics reseeded to 80 rows (10 books × 8 days)', metricCount === 80, `count=${metricCount}`);
+  const { count: productCount, error: pcErr } = await admin
+    .from('products')
+    .select('*', { count: 'exact', head: true });
+  if (pcErr) throw new Error(pcErr.message);
+  check(
+    `metrics reseeded to 8 days × every product (${(productCount ?? 0) * 8} rows)`,
+    metricCount === (productCount ?? 0) * 8,
+    `count=${metricCount}, products=${productCount}`,
+  );
 
-  // run reset twice more — identical outcome is the AC-3 property
-  const snapA = (await admin.from('products').select('sku,is_featured,featured_rank,inventory')).data;
+  // run reset twice more — identical outcome is the AC-3 property.
+  // .order('sku') is load-bearing: without it we compare heap order, and the
+  // reset's UPDATE reorders rows physically → false mismatches.
+  const snapA = (await admin.from('products').select('sku,is_featured,featured_rank,inventory').order('sku')).data;
   await resetOnce();
-  const snapB = (await admin.from('products').select('sku,is_featured,featured_rank,inventory')).data;
-  check('reset is idempotent across runs', JSON.stringify(snapA) === JSON.stringify(snapB));
+  const snapB = (await admin.from('products').select('sku,is_featured,featured_rank,inventory').order('sku')).data;
+  const firstDiff = snapA && snapB ? snapA.findIndex((r, i) => JSON.stringify(r) !== JSON.stringify(snapB[i])) : -1;
+  check(
+    'reset is idempotent across runs',
+    JSON.stringify(snapA) === JSON.stringify(snapB),
+    firstDiff >= 0 ? `first diff at index ${firstDiff}: ${JSON.stringify(snapA![firstDiff])} vs ${JSON.stringify(snapB![firstDiff])}` : undefined,
+  );
 
   // ── 3. advance to day 8 → exactly one conversion drop ─────────────
+  let dayIndex: number | undefined;
   for (let i = 0; i < 8; i++) {
     const { data, error } = await admin.rpc('demo_advance_day');
     if (error) throw new Error(`advance failed: ${error.message}`);
-    var dayIndex = data as number;
+    dayIndex = data as number;
   }
   check('advanced 0 → 8', dayIndex === 8, `dayIndex=${dayIndex}`);
 
@@ -120,7 +156,7 @@ async function main(): Promise<void> {
   const { data: anonBooks, error: anonReadErr } = await anon.from('products').select('sku');
   check(
     'anon CAN read products',
-    !anonReadErr && (anonBooks?.length ?? 0) === 10,
+    !anonReadErr && (anonBooks?.length ?? 0) > 0,
     anonReadErr?.message ?? `${anonBooks?.length} rows`,
   );
 
@@ -143,6 +179,19 @@ async function main(): Promise<void> {
 
   // ── cleanup: pristine day 0 ────────────────────────────────────────
   await resetOnce();
+
+  // Reset must leave the shelf inside the merchant's own slot cap. The deployed
+  // demo_reset() predates the curated baseline and re-features BK-102 → 5 slots;
+  // this check is what catches that drift until the seed is re-applied.
+  const { data: postResetShelf } = await admin.from('products').select('sku,featured_rank').eq('is_featured', true).order('featured_rank');
+  check(
+    `reset leaves a policy-compliant featured shelf (≤ ${maxSlots} slots)`,
+    (postResetShelf?.length ?? 0) <= maxSlots,
+    (postResetShelf?.length ?? 0) > maxSlots
+      ? `${postResetShelf!.length} featured after reset: ${postResetShelf!.map((f) => f.sku).join(',')} — re-apply db/003_seed.sql`
+      : JSON.stringify(postResetShelf?.map((f) => f.sku)),
+  );
+
   const { data: finalState } = await admin.from('sim_state').select('current_day_index').single();
   check('final state is pristine day 0', finalState?.current_day_index === 0);
 

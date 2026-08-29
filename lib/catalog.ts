@@ -83,7 +83,13 @@ export type BrowseQuery = {
 export async function listBooks(query: BrowseQuery): Promise<Book[]> {
   let req = publicRead().from('products').select(COLUMNS);
   const q = query.q?.trim();
-  if (q) req = req.or(`name.ilike.%${q}%,author.ilike.%${q}%`);
+  if (q) {
+    // PostgREST or=() syntax: commas separate conditions, parens group, % and _
+    // are ilike wildcards. Strip them so a search term can't split or inject the
+    // filter (FR-2).
+    const term = q.replace(/[,()%]/g, ' ').trim();
+    if (term) req = req.or(`name.ilike.%${term}%,author.ilike.%${term}%`);
+  }
   if (query.category) req = req.eq('category', query.category);
   switch (query.sort) {
     case 'price_asc':

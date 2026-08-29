@@ -72,14 +72,16 @@ as $$
 
   -- restore play-state so reset returns day 0 EXACTLY (AC-3 / PHASES §12):
   -- inventory back to fixture values, merchandising state back to the
-  -- two-title baseline the hero page starts with (AGENT.md §8).
+  -- curated four-title baseline the hero page starts with (AGENT.md §8):
+  -- fiction hero + three dataset genres (scripts/feature-books.ts). The
+  -- BK-2xx rows no-op on a fresh DB until scripts/import-books.ts runs.
   update products p set
     inventory     = s.inventory,
     is_featured   = s.feat,
     featured_rank = s.rank_
   from (values
     ('BK-101', 42, true,  1),
-    ('BK-102', 55, true,  2),
+    ('BK-102', 55, false, null::int),
     ('BK-103', 30, false, null::int),
     ('BK-104', 60, false, null::int),
     ('BK-105', 80, false, null::int),
@@ -87,7 +89,10 @@ as $$
     ('BK-107',  3, false, null::int),
     ('BK-108', 65, false, null::int),
     ('BK-109', 48, false, null::int),
-    ('BK-110', 90, false, null::int)
+    ('BK-110', 90, false, null::int),
+    ('BK-215', 62, true,  4),
+    ('BK-247', 14, true,  3),
+    ('BK-271', 11, true,  2)
   ) as s(sku, inventory, feat, rank_)
   where p.sku = s.sku;
 

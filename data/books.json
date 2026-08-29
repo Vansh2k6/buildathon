@@ -1,0 +1,722 @@
+[
+  {
+    "sku": "BK-201",
+    "title": "In Search of Melancholy Baby",
+    "author": "Aksyonov et al.",
+    "category": "biography",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 26,
+    "description": "The Russian author offers an affectionate chronicle of life in the United States, with discussions of such topics as the European charm of Washington, D.C., and the American immigration bureaucracy"
+  },
+  {
+    "sku": "BK-202",
+    "title": "All over but the Shoutin'",
+    "author": "Rick Bragg",
+    "category": "biography",
+    "priceInr": 405.87,
+    "costInr": 223.23,
+    "inventory": 33,
+    "description": "A New York Times Notable Book of the YearThis haunting, harrowing, gloriously moving recollection of a life on the American margin is the story of Rick Bragg, who grew up dirt-poor in northeastern Alabama, seemingly…"
+  },
+  {
+    "sku": "BK-203",
+    "title": "Written by Herself: Autobiographies of American Women: An Anthology",
+    "author": "Jill Ker Conway",
+    "category": "biography",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 28,
+    "description": "The bestselling author of The Road from Coorain presents an extraordinarily powerful anthology of the autobiographical writings of 25 women, literary predecessors and contemporaries that include Jane Addams, Zora Neale…"
+  },
+  {
+    "sku": "BK-204",
+    "title": "George Meany And His Times: A Biography",
+    "author": "Archie Robinson",
+    "category": "biography",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 21,
+    "description": "Draws on interviews and unpublished documents to re-create the life and times of the outspoken and influential labor leader and the drama of the labor movement in which he played a central role"
+  },
+  {
+    "sku": "BK-205",
+    "title": "Conflicting Accounts: The Creation and Crash of the Saatchi and Saatchi Advertising Empire",
+    "author": "Kevin Goldman",
+    "category": "business",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 50,
+    "description": "On December 16, 1994, a bloodletting took place in the stylish sixth-floor boardroom at Saatchi & Saatchi Company PLC, once the world's largest advertising agency holding company. Maurice Saatchi, the 48 year-old…"
+  },
+  {
+    "sku": "BK-206",
+    "title": "Inside the Tornado: Marketing Strategies from Silicon Valley's Cutting Edge",
+    "author": "Geoffrey A. Moore",
+    "category": "business",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 24,
+    "description": "\"The chasm is where high-tech fortunes are lost... the tornado is where they are made.\"-- Steve Jobs, Founder & CEO, Next Computer, Inc. Now, in this fascinating sequel, Moore shows how to capitalize on the profit-rich…"
+  },
+  {
+    "sku": "BK-207",
+    "title": "Re-Inventing the Corporation: Transforming Your Job and Your Company for the New Information Society",
+    "author": "Naisbitt et al.",
+    "category": "business",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 54,
+    "description": "Describes how the new information society is altering the nature of the workplace and how some corporations are responding"
+  },
+  {
+    "sku": "BK-208",
+    "title": "Leadership Is an Art",
+    "author": "Max De Pree",
+    "category": "business",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 34,
+    "description": "Explores leadership as an art that must be felt, experienced, and created and discusses how to apply leadership abilities and a sense of integrity to business management situations"
+  },
+  {
+    "sku": "BK-209",
+    "title": "The Golden Christmas Tree",
+    "author": "Weisgard et al.",
+    "category": "children",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 41,
+    "description": "A simple yet poignant Christmas story tells of the joy and cheer visited upon the world by the animals as they gather to decorate a holiday tree"
+  },
+  {
+    "sku": "BK-210",
+    "title": "WORDS FOR EVERYDAY ANIMALS (Words for Everyday)",
+    "author": "Zoe Davenport",
+    "category": "children",
+    "priceInr": 1493.17,
+    "costInr": 821.24,
+    "inventory": 62,
+    "description": "Introduces children to animals and to the different parts they have"
+  },
+  {
+    "sku": "BK-211",
+    "title": "Give Us This Day",
+    "author": "Tudor et al.",
+    "category": "children",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 48,
+    "description": "Presents the text of the most widely known version of the Lord's prayer, with illustrations and brief commentary on the prayer's origins and different versions."
+  },
+  {
+    "sku": "BK-212",
+    "title": "Knots on a Counting Rope (Reading Rainbow Books)",
+    "author": "Rand et al.",
+    "category": "children",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 40,
+    "description": "In this poignant story, the counting rope is a metaphor for the passage of time and for a boy's emerging confidence in facing his blindness. \"A rich tale of intergenerational love and respect.... It is a moving…"
+  },
+  {
+    "sku": "BK-213",
+    "title": "Hey Mom! I'm Hungry!: Great-Tasting, Low-Fat, Easy Recipes to Feed Your Family",
+    "author": "Susan Powter",
+    "category": "cooking",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 56,
+    "description": "Susan Powter answers \"What's for breakfast? What's for dinner? What's for lunch? What can I snack on?\" with 100 of the best tasting, high-volume, low-fat recipes ever!Something sweet. Something chewy. Something for…"
+  },
+  {
+    "sku": "BK-214",
+    "title": "Currier and Ives Four Seasons Cookbook",
+    "author": "NATAHANIEL CURRIER and JAMES MERRITT",
+    "category": "cooking",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 62,
+    "description": "Illustrations by Currier & Ives adorn a modern collection of seasonal recipes"
+  },
+  {
+    "sku": "BK-215",
+    "title": "Linda Mccartney's Home Cooking",
+    "author": "Linda McCartney",
+    "category": "cooking",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 62,
+    "description": "Presents a collection of meatless recipes aimed at meat lovers, including beefless stroganoff, moussaka without lamb, shepherd's pie, and other treats"
+  },
+  {
+    "sku": "BK-216",
+    "title": "Wine in Everyday Cooking: \"Cooking with Wine for Family and Friends\"",
+    "author": "Patricia Ballard",
+    "category": "cooking",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 23,
+    "description": "Popular California food and wine consultant Patricia Ballard has been impressing winery visitors for years with her food and wine magic. Both her Italian heritage and her California fresh experience are reflected in…"
+  },
+  {
+    "sku": "BK-217",
+    "title": "Shadow Song",
+    "author": "Terry Kay",
+    "category": "fiction",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 25,
+    "description": "It was a wonderful summer, a great memory, the kind of love everybody ought to have. It changed my life - or almost did - and I think about it more than I should, but that was a long time ago.Amid the breathtaking…"
+  },
+  {
+    "sku": "BK-218",
+    "title": "Best New American Voices 2003",
+    "author": "Kulka et al.",
+    "category": "fiction",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 30,
+    "description": "Since its launch in 2000, the Best New American Voices series has been acclaimed for the range and originality of its selections, which represent the writers who promise to become the literary stars of tomorrow. The…"
+  },
+  {
+    "sku": "BK-219",
+    "title": "Jackie by Josie: A Novel",
+    "author": "Caroline Preston",
+    "category": "fiction",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 14,
+    "description": "Follows a thirtyish graduate who unexpectedly finds herself helping a celebrity biographer research the life of Jacqueline Kennedy Onassis, and ends up discovering surprising parallels between her own life and that of…"
+  },
+  {
+    "sku": "BK-220",
+    "title": "Sunset at Rosalie: A Novel",
+    "author": "Ann L. McLaughlin",
+    "category": "fiction",
+    "priceInr": 415,
+    "costInr": 228.25,
+    "inventory": 18,
+    "description": "Tells the story of a young girl and her family's country life in Mississippi during the years prior to World War I"
+  },
+  {
+    "sku": "BK-221",
+    "title": "Codebreakers' Victory: How the Allied Cryptogaphers Won World War II",
+    "author": "Hervie Haufler",
+    "category": "history",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 26,
+    "description": "For the first time ever, veteran World War II cryptographer Hervie Haufler details how American and British codebreakers were the decisive factor in the Allied victory. From the Purple Machine to the Navajo Talkers to…"
+  },
+  {
+    "sku": "BK-222",
+    "title": "Remembering Main Street: An American Album",
+    "author": "Pat Ross",
+    "category": "history",
+    "priceInr": 912.17,
+    "costInr": 501.69,
+    "inventory": 12,
+    "description": "These evocative biographies of ten still-authentic towns will delight preservationists, travel and Americana buffs, and all who have a fondness for American social history and popular culture.Pat Ross grew up in Main…"
+  },
+  {
+    "sku": "BK-223",
+    "title": "The Lisle Letters: An Abridgement",
+    "author": "Muriel St. Clare Byrne",
+    "category": "history",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 38,
+    "description": "In a one-volume abridgement, these sixteenth-century letters paint a magnificent portrait of family life amidst the intrigue, terror, and politics of the court of Henry VIII. The culmination of Lord Lisle's imprisonment…"
+  },
+  {
+    "sku": "BK-224",
+    "title": "Napoleon and Hitler",
+    "author": "Desmond Seward",
+    "category": "history",
+    "priceInr": 444.88,
+    "costInr": 244.68,
+    "inventory": 47,
+    "description": "Examines the possible similarities between two of the world's worst military dictators. The link: Carl von Clausewitz's treatise, On war , which draws extensively on Napoleon's battles and which Hitler read and re-read.…"
+  },
+  {
+    "sku": "BK-225",
+    "title": "Get Thee To a Punnery",
+    "author": "Richard Lederer",
+    "category": "humor",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 30,
+    "description": "Get Thee to a Punnery proves that the pun is mightier than the sword . . . and here are sidesplitting puns of every color, stripe and persuasion to suit every whim. Even if you don't know that your humerus is your funny…"
+  },
+  {
+    "sku": "BK-226",
+    "title": "The Goomba's Book of Love",
+    "author": "Schirripa et al.",
+    "category": "humor",
+    "priceInr": 422.47,
+    "costInr": 232.36,
+    "inventory": 35,
+    "description": "The actor from HBO's popular series The Sopranos and author of A Goomba's Guide to Life continues his humorous look at the mysteries of Italian-American culture, considering the ins and outs of goomba love, whether its…"
+  },
+  {
+    "sku": "BK-227",
+    "title": "Dave Barry's Guide to Marriage and/or Sex",
+    "author": "Dave Barry",
+    "category": "humor",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 52,
+    "description": "No book can guarantee you a long and happy relationship, even if the author didn't know about your secret hygiene problem. But the cover of a book is no place to discuss that. In Dave Barry's Guide to Marriage and/or…"
+  },
+  {
+    "sku": "BK-228",
+    "title": "The PreHistory of The Far Side: A 10th Anniversary Exhibit (Volume 14)",
+    "author": "Gary Larson",
+    "category": "humor",
+    "priceInr": 729.57,
+    "costInr": 401.26,
+    "inventory": 47,
+    "description": "A Far Side retrospective, celebrating its tenth anniversary.1989 FarWorks, Inc. All Rights Reserved. The Far Side and the Larson signature are registered trademarks of FarWorks, Inc."
+  },
+  {
+    "sku": "BK-229",
+    "title": "Best Friends: The True Story of the World's Most Beloved Animal Sanctuary",
+    "author": "Glen et al.",
+    "category": "nature",
+    "priceInr": 405.87,
+    "costInr": 223.23,
+    "inventory": 54,
+    "description": "\"Sinjin the badly burned black cat. . .who survived to welcome others home Victor the abandoned Australian Shepherd mix. . . the capo among dogs Tyson and Tommy, two tiny black kittens. . .who had something to teach us…"
+  },
+  {
+    "sku": "BK-230",
+    "title": "Young Men and Fire",
+    "author": "Norman MacLean",
+    "category": "nature",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 41,
+    "description": "On August 5, 1949, a crew of fifteen of the United States Forest Service's elite airborne firefighters, the Smokejumpers, stepped into the sky above a remote forest fire in the Montana wilderness. Two hours after their…"
+  },
+  {
+    "sku": "BK-231",
+    "title": "The California Coastal Resource Guide",
+    "author": "California Coastal Commission et al.",
+    "category": "nature",
+    "priceInr": 912.17,
+    "costInr": 501.69,
+    "inventory": 36,
+    "description": "This comprehensive and authoritative guide to the natural and cultural resources of California's magnificent 1,100-mile coastline is the companion to the best-selling California Coastal Access Guide. Whereas the Access…"
+  },
+  {
+    "sku": "BK-232",
+    "title": "Balancing Acts",
+    "author": "Edward Hoagland",
+    "category": "nature",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 19,
+    "description": "Alfred Kazin once said that Edward Hoagland is \"a writer born, a writer obsessed.\" The Washington Post called him \"the Thoreau of our time, an essayist so intensely personal, so sharp-eyed and deep-sighted, so tender…"
+  },
+  {
+    "sku": "BK-233",
+    "title": "Personality of the Cat",
+    "author": "Brandt Aymar",
+    "category": "pets",
+    "priceInr": 449.03,
+    "costInr": 246.97,
+    "inventory": 59,
+    "description": "A delightful collection of reflections on the feline contains selections from famous artists, writers, poets, and essayists, such as Pablo Picasso, Rudyard Kipling, T. S. Eliot, and others."
+  },
+  {
+    "sku": "BK-234",
+    "title": "What Bird Did That?: A Driver's Guide to Some Common Birds of North America",
+    "author": "Burton Silver",
+    "category": "pets",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 14,
+    "description": "An unusual guide to bird droppings identifies more than forty-five different birds, with information on each bird's habitat and food"
+  },
+  {
+    "sku": "BK-235",
+    "title": "Best Cat Stories",
+    "author": "O'Mara et al.",
+    "category": "pets",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 49,
+    "description": "23 fabulous feline tales. A literary feast for cat lovers, here are the finest of cats stories from James Herriot, P.G. Wodehouse, Damon Runyon, Doris Lessing, Patricia Highsmith, et al. Introduction by Doris Lessing.…"
+  },
+  {
+    "sku": "BK-236",
+    "title": "Superdog: Raising the Perfect Canine Companion",
+    "author": "Michael W. Fox",
+    "category": "pets",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 9,
+    "description": "Discusses canine behavior, offers advice on training, feeding and health care, and identifies the advantages of pet ownership"
+  },
+  {
+    "sku": "BK-237",
+    "title": "Journey Through Heartsongs",
+    "author": "Mattie J. T. Stepanek",
+    "category": "poetry",
+    "priceInr": 1656.68,
+    "costInr": 911.17,
+    "inventory": 24,
+    "description": "Collects poems written by the eleven-year-old muscular dystrophy patient, sharing his feelings and thoughts about his life, the deaths of his siblings, nature, faith, and hope."
+  },
+  {
+    "sku": "BK-238",
+    "title": "Dark Fields of the Republic: Poems 1991-1995",
+    "author": "Adrienne Cecile Rich",
+    "category": "poetry",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 32,
+    "description": "A theater of voices of men and women, the dead and the living, over time and across continents, the poems of Dark Fields of the Republic take conversations, imaginary and real, actions taken for better or worse, out of…"
+  },
+  {
+    "sku": "BK-239",
+    "title": "An Atlas of the Difficult World: Poems 1988-1991",
+    "author": "Adrienne Cecile Rich",
+    "category": "poetry",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 27,
+    "description": "In this, her thirteenth book of verse, the author of \"The Dream of a Common Language\" and \"Snapshots of a Daughter-in-Law\" writes of war, oppression, the future, death, mystery, love and the magic of poetry."
+  },
+  {
+    "sku": "BK-240",
+    "title": "The Silence Now: New and Uncollected Early Poems",
+    "author": "May Sarton",
+    "category": "poetry",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 12,
+    "description": "A collection of poems exploring the events and emotions of old age in the contemporary world includes Sarton's latest works and a selection of earlier poems never before published"
+  },
+  {
+    "sku": "BK-241",
+    "title": "The Good Book: Reading the Bible with Mind and Heart",
+    "author": "Peter J. Gomes",
+    "category": "religion",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 13,
+    "description": "\"The Bible and the social and moral consequences that derive from its interpretation are all too important to be left in the hands of the pious or the experts, and too significant to be ignored and trivialized by the…"
+  },
+  {
+    "sku": "BK-242",
+    "title": "Meditations: On the Monk Who Dwells in Daily Life",
+    "author": "Thomas Moore",
+    "category": "religion",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 40,
+    "description": "Sometimes in their chanting monks will land upon a note and sing it in florid fashion, one syllable of text for fifty notes of chant. Melisma, they call it.Living a melismatic life in imitation of plainchant, we may…"
+  },
+  {
+    "sku": "BK-243",
+    "title": "Joshua and the City",
+    "author": "Joseph F. Girzone",
+    "category": "religion",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 61,
+    "description": "A contemporary city faces turmoil and devastation until it is visited by the serene figure of Joshua, who presents an alternative, love-based approach to life while addressing such issues as poverty, racism, and AIDS.…"
+  },
+  {
+    "sku": "BK-244",
+    "title": "How Good Do We Have to Be? A New Understanding of Guilt and Forgiveness",
+    "author": "Harold S. Kushner",
+    "category": "religion",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 32,
+    "description": "From the author of When Bad Things Happen to Good People comes an inspiring new bestseller that puts human feelings of guilt and inadequacy in perspective - and teaches us how we can learn to accept ourselves and others…"
+  },
+  {
+    "sku": "BK-245",
+    "title": "ON THE WING: The Life of Birds: From Feathers to Flight",
+    "author": "Bruce Brooks",
+    "category": "science",
+    "priceInr": 1597.75,
+    "costInr": 878.76,
+    "inventory": 10,
+    "description": "Takes a close-up look at the remarkable physiology and behavior of birds"
+  },
+  {
+    "sku": "BK-246",
+    "title": "Life Stories",
+    "author": "Heather Newbold",
+    "category": "science",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 12,
+    "description": "\"This unusual collection of conversations with leading environmental thinkers breaks down the conventional separation between thinking and living. The presentations of ecological ideas are not only superior but often…"
+  },
+  {
+    "sku": "BK-247",
+    "title": "The Whole Shebang: A State-of-the-Universe(s) Report",
+    "author": "Timothy Ferris",
+    "category": "science",
+    "priceInr": 688.07,
+    "costInr": 378.44,
+    "inventory": 14,
+    "description": "From the world-acclaimed author of Coming of Age in the Milky Way comes this delightfully engrossing, comprehensive, and comprehensible report on how science today envisions the universe as a whole.Timothy Ferris begins…"
+  },
+  {
+    "sku": "BK-248",
+    "title": "Our Nature",
+    "author": "Bill Gilbert",
+    "category": "science",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 62,
+    "description": "A collection of essays on natural history includes discussions of falconry, rattlesnakes, winter camping, grizzly bears, and influential naturalists"
+  },
+  {
+    "sku": "BK-249",
+    "title": "Care of the Soul : A Guide for Cultivating Depth and Sacredness in Everyday Life",
+    "author": "Thomas Moore",
+    "category": "self-help",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 27,
+    "description": "A therapist draws on the world's religions, music, art, and his own experiences with patients to examine the connections between spirituality and the problems of individuals and society. Reprint. 150,000 first printing.…"
+  },
+  {
+    "sku": "BK-250",
+    "title": "Too Young to Retire: 101 Ways To Start The Rest of Your Life",
+    "author": "Stone et al.",
+    "category": "self-help",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 51,
+    "description": "“This little gem of a book offers sage advice on everything from downsizing to diet and exercise.”—The New York TimesWith Americans living longer, healthier lives, the conventional idea of retirement is obsolete.…"
+  },
+  {
+    "sku": "BK-251",
+    "title": "The Catholic Girl's Guide to Sex",
+    "author": "Anderson et al.",
+    "category": "self-help",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 32,
+    "description": "The essential handbook for managing your morals the modern wayYou don’t have to be Catholic to feel a twinge of concern when your love life gets too lively—but it helps. Melinda Anderson and Kathleen Murray to the…"
+  },
+  {
+    "sku": "BK-252",
+    "title": "Struggle for Intimacy (Adult Children of Alcoholics series)",
+    "author": "Janet Geringer Woititz",
+    "category": "self-help",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 48,
+    "description": "Janet Woititz, mother of the recovery movement, sensitively addresses the barriers of trust and intimacy that children learn in an alcoholic family. She provides suggestions for building loving relationships with…"
+  },
+  {
+    "sku": "BK-253",
+    "title": "Going the Other Way: Lessons from a Life In and Out of Major League Baseball",
+    "author": "Bean et al.",
+    "category": "sports",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 48,
+    "description": "Last spring Billy Bean, the only living openly gay former major leaguer, gained national attention with his breakthrough memoir, Going the Other Way?an unprecedented chronicle of America’s national pastime that went on…"
+  },
+  {
+    "sku": "BK-254",
+    "title": "Trailside Guide: Fly Fishing",
+    "author": "Hildebrand et al.",
+    "category": "sports",
+    "priceInr": 1597.75,
+    "costInr": 878.76,
+    "inventory": 44,
+    "description": "Norton proudly reissues these best-selling guides with fully revised \"Sources & Resources\" sections (including where to find the Web sites, gear, services, books, clubs, and organizations that make for foolproof…"
+  },
+  {
+    "sku": "BK-255",
+    "title": "Iron Man: The Cal Ripken, Jr. Story",
+    "author": "Harvey Rosenfeld",
+    "category": "sports",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 54,
+    "description": "Since May 30, 1982, Cal Ripken, Jr., of the Baltimore Orioles hasn't missed a game - a marathon performance during which he has won the 1982 Rookie of the Year Award, two American League MVP awards, an All-Star Game MVP…"
+  },
+  {
+    "sku": "BK-256",
+    "title": "A Passion for Golf: The Best of Golf Writing",
+    "author": "Garrity et al.",
+    "category": "sports",
+    "priceInr": 463.14,
+    "costInr": 254.73,
+    "inventory": 37,
+    "description": "With a foreword by the legendary Arnold Palmer, this inspired collection includes pieces on golf by such noted writers as Alex Morrison, George Plimpton, Dave Barry, John Updike, Rick Reilly, Herbert Warren Wind, Harvey…"
+  },
+  {
+    "sku": "BK-257",
+    "title": "Looking for Alaska",
+    "author": "Peter Jenkins",
+    "category": "travel",
+    "priceInr": 493.02,
+    "costInr": 271.16,
+    "inventory": 37,
+    "description": "More than twenty years ago, a disillusioned college graduate named Peter Jenkins set out with his dog Cooper to look for himself and his nation. His memoir of what he found, A Walk Across America, captured the hearts of…"
+  },
+  {
+    "sku": "BK-258",
+    "title": "The Reader's Companion to South Africa",
+    "author": "Alan Ryan",
+    "category": "travel",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 59,
+    "description": "Mark Twain, Jan Morris, P. J. O’Rourke, and Michael Palin are just a few of the contributors to this provocative armchair tour of South Africa, which takes us from Capetown to Soweto, from 1850 to the present.…"
+  },
+  {
+    "sku": "BK-259",
+    "title": "Adventuring Along the Southeast Coast: The Sierra Club Guide to the Low Country, Beaches, and Barrier Islands of North Carolina, South Carolina, and (Sierra Club Adventure Travel Guides)",
+    "author": "John Bowen",
+    "category": "travel",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 34,
+    "description": "Describes the sites and recreational opportunities of the region"
+  },
+  {
+    "sku": "BK-260",
+    "title": "25 Bicycle Tours in New Jersey",
+    "author": "Zatz et al.",
+    "category": "travel",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 36,
+    "description": "Describes bicycle tours in each section of the state, provides detailed directions, and includes information on the length, terrain, and traffic of each route"
+  },
+  {
+    "sku": "BK-261",
+    "title": "Cop: A True Story",
+    "author": "Michael L. Middleton",
+    "category": "true-crime",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 29,
+    "description": "What's it like to sit in the front seat of a patrol car, cruising darkened city streets, when the radio crackles to life and sends you down an alley to a \"robbery in progress,\" the outcome of which you can't possibly…"
+  },
+  {
+    "sku": "BK-262",
+    "title": "Between Good and Evil: A Master Profiler's Hunt for Society's Most Violent Predators",
+    "author": "Depue et al.",
+    "category": "true-crime",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 57,
+    "description": "He was a pioneer in modern law enforcement, a trailblazing leader in the hunt for serial killers. But after decades of staring deep into the darkness, he entered a seminary to search for the good... BETWEEN GOOD AND…"
+  },
+  {
+    "sku": "BK-263",
+    "title": "The Bureau and the Mole: The Unmasking of Robert Philip Hanssen, the Most Dangerous Double Agent in FBI History",
+    "author": "David A. Vise",
+    "category": "true-crime",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 31,
+    "description": "Called \"a first-rate spy story\" (Entertainment Weekly), The Bureau and the Mole is the sensational New York Times best-seller that tells the inside story of FBI counterintelligence agent Robert Philip Hanssen, a…"
+  },
+  {
+    "sku": "BK-264",
+    "title": "Murder in Brentwood",
+    "author": "Mark Fuhrman",
+    "category": "true-crime",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 11,
+    "description": "Recounts the first twenty-four hours of the investigation into the murder of Nicole Brown Simpson, describing evidence that was not used in the trial and sharing the author's impressions of the case and why it failed to…"
+  },
+  {
+    "sku": "BK-265",
+    "title": "The Dieter's Guide to Weight Loss During Sex",
+    "author": "Richard Smith",
+    "category": "wellness",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 62,
+    "description": "A humor classic, this tongue-in-cheek diet plan bases calorie counts on sexual activity and charts the exact number of calories burned.\"You and your friends can read this book aloud while sitting on the beach and shed a…"
+  },
+  {
+    "sku": "BK-266",
+    "title": "Fat Free, Flavor Full: Dr. Gabe Mirkin's Guide to Losing Weight and Living Longer",
+    "author": "Mirkin et al.",
+    "category": "wellness",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 28,
+    "description": "A collection of 250 appetizing, meatless recipes provides a plan that lowers cholesterol and reduces the risk of heart disease, cancer, and diabetes by cutting down on fat intake without compromising on taste and…"
+  },
+  {
+    "sku": "BK-267",
+    "title": "Fight Fat After Forty: The Revolutionary Three-Pronged Approach That Will Break Your Stress-Fat Cycle and Make You Healthy, Fit, and Trim for Life",
+    "author": "Pamela Peeke",
+    "category": "wellness",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 31,
+    "description": "It's a fact: stress makes you fat. Renowned clinician and scientist Dr. Pamela Peeke goes beyond diet and exercise with a lifestyle program that shows women how to stop being diet \"POWs\" (\"Prisoners Of Weight\") or…"
+  },
+  {
+    "sku": "BK-268",
+    "title": "Mastering the Zone: The Next Step in Achieving SuperHealth and Permanent Fat Loss",
+    "author": "Sears et al.",
+    "category": "wellness",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 29,
+    "description": "Everyone from Madonna to Howard Stern to the cast of Baywatch is in \"the Zone\" -- and now \"Zone\"-favorable cuisine is tastier than ever! Dr. Barry Sears, author of the No.1 New York Times bestseller and health…"
+  },
+  {
+    "sku": "BK-269",
+    "title": "The Sands of Time: A Hermux Tantamoq Adventure",
+    "author": "Michael Hoeye",
+    "category": "young-adult",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 25,
+    "description": "Our favorite mouse and watchmaker, Hermux Tantamoq, is up to his ears in trouble again. All of Pinchester is in an uproar over his friend Mirrin Stentrill's visionary new paintings-monumental portraits of CATS! The…"
+  },
+  {
+    "sku": "BK-270",
+    "title": "In the Shadow of the Ark",
+    "author": "Provoost et al.",
+    "category": "young-adult",
+    "priceInr": 454.01,
+    "costInr": 249.71,
+    "inventory": 10,
+    "description": "THE RED TENT meets GIRL WITH A PEARL EARRING in the profoundly moving tale of a young woman who survives the flood as a stowaway on Noah's Ark.\"And every living substance that I have made will I destroy from off the…"
+  },
+  {
+    "sku": "BK-271",
+    "title": "The Supernaturalist",
+    "author": "Eoin Colfer",
+    "category": "young-adult",
+    "priceInr": 414.17,
+    "costInr": 227.79,
+    "inventory": 11,
+    "description": "In the not-too-distant future, in a place called Satellite City, thirteen-year-old Cosmo Hill is unfortunate enough to come into the world unwanted by his parents. And so, as are all orphaned boys his age, Cosmo is…"
+  },
+  {
+    "sku": "BK-272",
+    "title": "Hope Was Here (Newbery Honor Book)",
+    "author": "Joan Bauer",
+    "category": "young-adult",
+    "priceInr": 439.07,
+    "costInr": 241.49,
+    "inventory": 22,
+    "description": "When sixteen-year-old Hope and the aunt who has raised her move from Brooklyn to Mulhoney, Wisconsin, to work as waitress and cook in the Welcome Stairways diner, they become involved with the diner owner's political…"
+  }
+]
