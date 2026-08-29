@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Navbar } from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'merchant-agent',
+  title: 'Merchant-Agent — Autonomous Merchandising Engine',
   description: 'Bounded autonomy: an LLM proposes, code decides.',
 };
 
@@ -11,7 +12,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

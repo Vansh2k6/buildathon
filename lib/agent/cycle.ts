@@ -9,6 +9,7 @@ import { detectInternalSignal } from '@/lib/observe/internal';
 import { detectExternalSignal } from '@/lib/observe/external';
 import type { Signal } from '@/lib/observe/types';
 import { proposeAction } from '@/lib/decide/propose';
+import { evaluate } from '@/lib/policy/engine';
 import { executeDiscount } from '@/lib/execute/discount';
 import { executeFeatured } from '@/lib/execute/featured';
 import { executeOrder } from '@/lib/execute/order';

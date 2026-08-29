@@ -25,39 +25,79 @@ export default async function BrowsePage({ searchParams }: { searchParams: Searc
   }
 
   return (
-    <main>
-      <header className="masthead">
-        <Link href="/" className="brand">
-          ← Demo Merchant
-        </Link>
-      </header>
+    <main className="container">
+      <h1 className="page-title">Browse Bookstore Catalog</h1>
+      <p className="page-sub">
+        Explore full bookstore inventory. Real-time prices reflect active agent promotional discounts.
+      </p>
 
-      <h1>Browse the shop</h1>
+      {/* Filter Form */}
+      <div className="glass-card" style={{ marginBottom: '32px', padding: '16px 24px' }}>
+        <form style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }} method="GET" action="/browse">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search by title or author…"
+            defaultValue={query.q ?? ''}
+            style={{
+              flex: '1 1 240px',
+              padding: '10px 14px',
+              borderRadius: '6px',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-base)',
+              color: 'var(--text-main)',
+              fontFamily: 'var(--font-body)',
+            }}
+          />
+          <select
+            name="category"
+            defaultValue={query.category ?? ''}
+            style={{
+              padding: '10px 14px',
+              borderRadius: '6px',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-base)',
+              color: 'var(--text-main)',
+              fontFamily: 'var(--font-body)',
+            }}
+          >
+            <option value="">All Categories</option>
+            {categories.map(({ category, count }) => (
+              <option key={category} value={category}>
+                {category} ({count})
+              </option>
+            ))}
+          </select>
 
-      <form className="filters" method="GET" action="/browse">
-        <input type="search" name="q" placeholder="Title or author…" defaultValue={query.q ?? ''} />
-        <select name="category" defaultValue={query.category ?? ''}>
-          <option value="">All collections</option>
-          {categories.map(({ category, count }) => (
-            <option key={category} value={category}>
-              {category} ({count})
-            </option>
-          ))}
-        </select>
-        <select name="sort" defaultValue={query.sort ?? ''}>
-          <option value="">Sort: title A–Z</option>
-          <option value="price_asc">Price ↑</option>
-          <option value="price_desc">Price ↓</option>
-        </select>
-        <button type="submit">Apply</button>
-        {query.q || query.category || query.sort ? (
-          <Link href="/browse" className="clear">
-            Clear
-          </Link>
-        ) : null}
-      </form>
+          <select
+            name="sort"
+            defaultValue={query.sort ?? ''}
+            style={{
+              padding: '10px 14px',
+              borderRadius: '6px',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-base)',
+              color: 'var(--text-main)',
+              fontFamily: 'var(--font-body)',
+            }}
+          >
+            <option value="">Sort: Title A–Z</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+          </select>
 
-      {error ? <p className="empty">Catalog unavailable: {error}</p> : <BookGrid books={books} />}
+          <button type="submit" className="btn btn-primary">
+            Apply Filters
+          </button>
+          {query.q || query.category || query.sort ? (
+            <Link href="/browse" className="btn btn-secondary" style={{ padding: '10px 14px' }}>
+              Clear
+            </Link>
+          ) : null}
+        </form>
+      </div>
+
+      {error ? <p className="page-sub">Catalog unavailable: {error}</p> : <BookGrid books={books} />}
     </main>
   );
 }

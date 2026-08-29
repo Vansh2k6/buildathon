@@ -20,20 +20,21 @@ export default async function CollectionPage({ params }: { params: Params }) {
   }
 
   return (
-    <main>
-      <header className="masthead">
-        <Link href="/" className="brand">
-          ← Demo Merchant
+    <main className="container">
+      <div style={{ marginBottom: '24px' }}>
+        <Link href="/browse" style={{ fontSize: '0.85rem', color: 'var(--accent-amber)', fontFamily: 'var(--font-mono)' }}>
+          ← Back to All Collections
         </Link>
-      </header>
+      </div>
 
-      <p className="eyebrow">Collection</p>
-      <h1>{category}</h1>
-      <p>
-        <Link href="/browse">Browse everything →</Link>
+      <h1 className="page-title" style={{ textTransform: 'capitalize' }}>
+        Collection: {category}
+      </h1>
+      <p className="page-sub">
+        Showing all {books.length} title(s) in the {category} category.
       </p>
 
-      {error ? <p className="empty">Catalog unavailable: {error}</p> : <BookGrid books={books} />}
+      {error ? <p className="page-sub">Catalog unavailable: {error}</p> : <BookGrid books={books} />}
     </main>
   );
 }

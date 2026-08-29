@@ -114,7 +114,7 @@ export async function proposeAction(
   let responseJson: any = null;
   let attempt = 0;
 
-  while (attempt < 2) {
+  while (attempt < 3) {
     attempt++;
     try {
       const res = await fetch(`${baseUrl}/chat/completions`, {
@@ -132,9 +132,9 @@ export async function proposeAction(
         break;
       }
 
-      // Retry once on 429 or 5xx
-      if ((res.status === 429 || res.status >= 500) && attempt < 2) {
-        await new Promise((r) => setTimeout(r, 1000));
+      // Retry on 429 or 5xx
+      if ((res.status === 429 || res.status >= 500) && attempt < 3) {
+        await new Promise((r) => setTimeout(r, 2000 * attempt));
         continue;
       }
 
