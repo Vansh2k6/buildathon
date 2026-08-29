@@ -11,7 +11,7 @@ import { serverAdmin } from '../lib/db';
 import { effectivePriceP as effectiveCatalog } from '../lib/catalog';
 import { effectivePriceP as effectiveRules } from '../lib/policy/rules';
 import { effectivePriceP as effectiveMoney } from '../lib/money';
-import { sanitizeProductMetricsOrders } from '../app/api/sim/reset/route';
+
 import { detectInternalSignal } from '../lib/observe/internal';
 
 function assert(cond: boolean, msg: string): void {
@@ -38,7 +38,7 @@ async function main(): Promise<void> {
   console.log('\nTesting BUG-2 (product_metrics_daily orders vs revenue_p)...');
   const db = serverAdmin();
   await db.rpc('demo_reset');
-  await sanitizeProductMetricsOrders(db);
+  // BUG-5 fix: demo_reset() now seeds correct raw counts directly — no band-aid needed
   
   const { data: bk101Product } = await db.from('products').select('id').eq('sku', 'BK-101').single();
   assert(bk101Product !== null, 'BK-101 product found');

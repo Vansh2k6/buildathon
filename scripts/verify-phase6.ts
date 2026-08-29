@@ -12,7 +12,7 @@ import { serverAdmin } from '../lib/db';
 import { executeDiscount } from '../lib/execute/discount';
 import { executeFeatured } from '../lib/execute/featured';
 import { executeOrder } from '../lib/execute/order';
-import { sanitizeProductMetricsOrders } from '../app/api/sim/reset/route';
+
 
 // Minimal ApprovedAction builder for test — matches lib/policy/types shape
 function fakeApproved(fields: Record<string, any>): any {
@@ -36,7 +36,6 @@ async function main(): Promise<void> {
   // Reset database before test
   const { error: rErr } = await db.rpc('demo_reset');
   assert(!rErr, `demo_reset failed: ${rErr?.message}`);
-  await sanitizeProductMetricsOrders(db);
 
   const dummyRunId = '00000000-0000-0000-0000-000000000002';
 

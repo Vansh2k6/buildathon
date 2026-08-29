@@ -11,7 +11,7 @@ import { PROPOSE_ACTION_TOOL, validateProposalInput } from '../lib/decide/schema
 import { SYSTEM_PROMPT, buildRetryPromptBlock, buildUserPrompt } from '../lib/decide/prompt';
 import { runAgentCycle, MAX_RETRIES } from '../lib/agent/cycle';
 import { fetchRunEvents } from '../lib/audit/log';
-import { sanitizeProductMetricsOrders } from '../app/api/sim/reset/route';
+
 
 function assert(cond: boolean, msg: string): void {
   if (!cond) {
@@ -64,7 +64,6 @@ async function main(): Promise<void> {
   // Reset database & advance to Day 8
   const { error: rErr } = await db.rpc('demo_reset');
   assert(!rErr, `demo_reset failed: ${rErr?.message}`);
-  await sanitizeProductMetricsOrders(db);
 
   for (let i = 0; i < 8; i++) {
     const { error: aErr } = await db.rpc('demo_advance_day');
