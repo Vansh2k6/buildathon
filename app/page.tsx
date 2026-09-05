@@ -52,7 +52,7 @@ export default async function Home() {
 
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}>
                 <Link href="/browse" className="btn btn-primary">
-                  Explore Catalog →
+                  Explore Catalog
                 </Link>
                 <Link href="/audit" className="btn btn-secondary">
                   View Audit Trail

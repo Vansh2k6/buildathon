@@ -134,20 +134,20 @@ export default async function AuditPage() {
                     <div className="rejection-comparison">
                       <div>
                         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>PROPOSED BY LLM:</span>
-                        <div style={{ color: 'var(--orange)', fontWeight: '700', fontSize: '1.1rem' }}>
+                        <div style={{ color: 'var(--orange)', fontWeight: '600', fontSize: '1.1rem' }}>
                           {run.verdict.detail?.value !== undefined ? fmt(run.verdict.detail.value) : 'Off-policy'}
                         </div>
                       </div>
                       <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '24px' }}>
                         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>MERCHANT POLICY CEILING:</span>
-                        <div style={{ color: 'var(--accent)', fontWeight: '700', fontSize: '1.1rem' }}>
+                        <div style={{ color: 'var(--accent)', fontWeight: '600', fontSize: '1.1rem' }}>
                           {run.verdict.detail?.limit !== undefined ? fmt(run.verdict.detail.limit) : 'Ceiling Enforced'}
                         </div>
                       </div>
                     </div>
 
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '12px', fontStyle: 'italic' }}>
-                      ⚡ Bounded Autonomy: The model was never disclosed the policy ceiling in its prompt. Deterministic code enforced the limit and refused the action.
+                      Bounded autonomy: the model was never disclosed the policy ceiling in its prompt. Deterministic code enforced the limit and refused the action.
                     </p>
                   </div>
                   );

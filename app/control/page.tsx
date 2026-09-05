@@ -112,7 +112,7 @@ export default function ControlPage() {
           <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             SIMULATED TIME CLOCK
           </span>
-          <div style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--accent)', marginTop: '4px' }}>
+          <div style={{ fontSize: '2.5rem', fontWeight: '600', fontFamily: 'var(--font-mono)', color: 'var(--accent)', marginTop: '4px', letterSpacing: '-0.01em' }}>
             {dayIndex !== null ? `Day ${dayIndex}` : 'Day ...'}
           </div>
         </div>
@@ -186,7 +186,7 @@ export default function ControlPage() {
                 {lastResult.status}
               </span>
               <Link href="/audit" className="btn btn-secondary" style={{ padding: '4px 12px', fontSize: '0.8rem' }}>
-                View in Audit →
+                View in Audit
               </Link>
             </div>
           </div>
