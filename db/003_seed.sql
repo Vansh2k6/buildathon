@@ -2,11 +2,8 @@
 -- Fixture spec: TASKS.md §10 (books, ADR-019). Safe to re-run any time;
 -- `demo_reset()` is the ONE implementation of "reset", shared by the SQL editor
 -- and POST /api/sim/reset.
---
--- Seeded PRNG (Mulberry32, seed=304181768) generates organic metrics.
--- Organic jitter: views ±20%, CR ±15%. BK-101 anomaly on day 8 (61.2% drop).
--- BK-109 has zero orders (dead stock). All other titles get PRNG-jittered curves.
--- Deterministic across every run (ADR-008).
+-- Seed metrics: BK-101 drop on day 8; other titles default curves.
+-- Deterministic baseline for demo runs.
 
 insert into products (sku, name, author, description, category, price_p, cost_p, inventory) values
   ('BK-101', 'The Assam Tea Planter''s Daughter', 'R. Baruah',    'A family saga of love and land on a colonial Assam tea estate.', 'fiction',    49900, 30000, 42),  -- T1 target
@@ -45,94 +42,23 @@ as $$
   -- executions even inside security definer functions.
   delete from product_metrics_daily where true;
 
-  -- Per-product metrics with seeded PRNG jitter (scripts/generate-metrics.ts, seed=304181768)
-  -- Organic curves: ±20% view jitter, ±15% CR jitter. BK-101 anomaly on day 8 (61.2% drop).
-  -- BK-109 always 0 orders (dead stock). Deterministic across every run (ADR-008).
+  -- orders = raw count (d.orders), revenue_p = d.orders * price_p
   insert into product_metrics_daily (product_id, day_index, views, orders, revenue_p)
   select p.id, d.day_index, d.views, d.orders, d.orders * p.price_p
   from products p
   join (values
-    ('BK-101', 1, 143, 6),
-    ('BK-101', 2, 142, 6),
-    ('BK-101', 3, 170, 7),
-    ('BK-101', 4, 180, 7),
-    ('BK-101', 5, 134, 6),
-    ('BK-101', 6, 134, 6),
-    ('BK-101', 7, 128, 6),
-    ('BK-101', 8, 180, 3),
-    ('BK-102', 1, 56, 3),
-    ('BK-102', 2, 41, 2),
-    ('BK-102', 3, 54, 2),
-    ('BK-102', 4, 46, 2),
-    ('BK-102', 5, 48, 2),
-    ('BK-102', 6, 55, 2),
-    ('BK-102', 7, 44, 2),
-    ('BK-102', 8, 53, 2),
-    ('BK-103', 1, 31, 1),
-    ('BK-103', 2, 31, 1),
-    ('BK-103', 3, 38, 1),
-    ('BK-103', 4, 40, 1),
-    ('BK-103', 5, 31, 1),
-    ('BK-103', 6, 40, 1),
-    ('BK-103', 7, 31, 1),
-    ('BK-103', 8, 32, 1),
-    ('BK-104', 1, 47, 3),
-    ('BK-104', 2, 37, 2),
-    ('BK-104', 3, 50, 2),
-    ('BK-104', 4, 37, 2),
-    ('BK-104', 5, 37, 2),
-    ('BK-104', 6, 36, 2),
-    ('BK-104', 7, 39, 2),
-    ('BK-104', 8, 47, 3),
-    ('BK-105', 1, 44, 2),
-    ('BK-105', 2, 40, 2),
-    ('BK-105', 3, 42, 2),
-    ('BK-105', 4, 56, 2),
-    ('BK-105', 5, 47, 2),
-    ('BK-105', 6, 47, 2),
-    ('BK-105', 7, 53, 2),
-    ('BK-105', 8, 56, 2),
-    ('BK-106', 1, 12, 1),
-    ('BK-106', 2, 16, 1),
-    ('BK-106', 3, 14, 1),
-    ('BK-106', 4, 14, 1),
-    ('BK-106', 5, 14, 1),
-    ('BK-106', 6, 14, 1),
-    ('BK-106', 7, 13, 1),
-    ('BK-106', 8, 16, 1),
-    ('BK-107', 1, 24, 1),
-    ('BK-107', 2, 16, 1),
-    ('BK-107', 3, 19, 1),
-    ('BK-107', 4, 23, 1),
-    ('BK-107', 5, 19, 1),
-    ('BK-107', 6, 16, 1),
-    ('BK-107', 7, 21, 1),
-    ('BK-107', 8, 19, 1),
-    ('BK-108', 1, 31, 2),
-    ('BK-108', 2, 32, 2),
-    ('BK-108', 3, 40, 2),
-    ('BK-108', 4, 31, 2),
-    ('BK-108', 5, 44, 2),
-    ('BK-108', 6, 35, 2),
-    ('BK-108', 7, 40, 2),
-    ('BK-108', 8, 42, 2),
-    ('BK-109', 1, 35, 0),
-    ('BK-109', 2, 47, 0),
-    ('BK-109', 3, 44, 0),
-    ('BK-109', 4, 39, 0),
-    ('BK-109', 5, 44, 0),
-    ('BK-109', 6, 34, 0),
-    ('BK-109', 7, 43, 0),
-    ('BK-109', 8, 33, 0),
-    ('BK-110', 1, 36, 1),
-    ('BK-110', 2, 44, 2),
-    ('BK-110', 3, 41, 2),
-    ('BK-110', 4, 51, 2),
-    ('BK-110', 5, 40, 2),
-    ('BK-110', 6, 37, 2),
-    ('BK-110', 7, 45, 2),
-    ('BK-110', 8, 51, 2)
+    ('BK-101', 1, 150, 6), ('BK-101', 2, 162, 7), ('BK-101', 3, 148, 6),
+    ('BK-101', 4, 171, 7), ('BK-101', 5, 155, 7), ('BK-101', 6, 168, 7),
+    ('BK-101', 7, 160, 7), ('BK-101', 8, 180, 3)
   ) as d(sku, day_index, views, orders) on d.sku = p.sku;
+
+  insert into product_metrics_daily (product_id, day_index, views, orders, revenue_p)
+  select p.id, g.day,
+         case when p.sku = 'BK-109' then 40 else 45 end,
+         case when p.sku = 'BK-109' then  0 else  2 end,
+         case when p.sku = 'BK-109' then  0 else  2 * p.price_p end
+  from products p cross join generate_series(1, 8) as g(day)
+  where p.sku <> 'BK-101';
 
   -- restore play-state so reset returns day 0 EXACTLY (AC-3 / PHASES §12):
   -- inventory back to fixture values, merchandising state back to the
