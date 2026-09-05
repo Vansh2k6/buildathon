@@ -139,7 +139,6 @@ AGENT_BUYER_KEY=demo-agent-key
 - `npm run typecheck`: Run TypeScript compiler validation without emitting files.
 - `npm run buyer:normal`: Run normal AI buyer agent (places on-policy order & generates Razorpay payment link).
 - `npm run buyer:max-qty`: Run over-quantity AI buyer agent (tests threshold violation & policy engine rejection).
-- `npm run observe:buyer`: Run end-to-end full verification suite.
 
 ## API Endpoints
 

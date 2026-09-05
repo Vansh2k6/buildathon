@@ -9,7 +9,6 @@
     "typecheck": "tsc --noEmit",
     "buyer:normal": "tsx scripts/buyer-normal.ts",
     "buyer:max-qty": "tsx scripts/buyer-max-qty.ts",
-    "observe:buyer": "tsx scripts/observe-buyer.ts",
     "db:push-reset": "tsx scripts/push-demo-reset.ts"
   },
   "dependencies": {
