@@ -204,7 +204,7 @@ export async function runAgentCycle(
 ): Promise<CycleResult> {
   const startTime = Date.now();
   const db = opts?.db ?? serverAdmin();
-  const executeStubbed = opts?.executeStubbed ?? true;
+  const executeStubbed = opts?.executeStubbed ?? false;
 
   // Resolve current day
   let currentDay: number;
@@ -402,10 +402,17 @@ export async function runAgentCycle(
 
   // ── PHASE 5: RESULT ────────────────────────────────────────────────────
   const elapsed = Date.now() - startTime;
-  const targetSku = (approved.kind === 'discount' || approved.kind === 'feature' || approved.kind === 'discount_and_feature') ? approved.sku : null;
-  const targetDisc = (approved.kind === 'discount' || approved.kind === 'discount_and_feature') ? approved.discount_pct : null;
-  let summary = targetSku ? `${targetSku}` : 'action';
-  if (targetDisc) summary += ` at ${targetDisc}% discount`;
+  let summary = 'no changes';
+  if (approved.kind === 'discount' || approved.kind === 'discount_and_feature') {
+    summary = `${approved.sku}${approved.discount_pct ? ` at ${approved.discount_pct}% discount` : ''}`;
+  } else if (approved.kind === 'feature') {
+    summary = `featured ${approved.sku}`;
+  } else if (approved.kind === 'buyer_order') {
+    const firstLine = approved.lines?.[0];
+    summary = firstLine ? `order for ${firstLine.sku} (${firstLine.qty} units)` : 'buyer order';
+  } else if (approved.kind === 'no_action') {
+    summary = 'no changes';
+  }
 
   const resMsg = renderResultTemplate('executed', elapsed, summary);
   await logAgentEvent(db, runId, seq++, 'result', 'info', resMsg);

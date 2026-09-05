@@ -133,7 +133,7 @@ export default function ControlPage() {
         <div className="glass-card">
           <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Internal Detector Cycle</h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
-            Scans Supabase conversion metrics & dead stock. On Day 8, fires conversion drop signal on BK-101.
+            Scans daily conversion metrics and dead stock inventory to detect anomalies and underperforming products.
           </p>
           <button
             className="btn btn-secondary"

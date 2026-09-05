@@ -27,6 +27,18 @@ export async function executeFeatured(
     throw new Error('Approved featured action must specify sku');
   }
 
+  // If setting as primary hero (rank 1), un-feature previous hero book(s)
+  if (rank === 1) {
+    await db
+      .from('products')
+      .update({
+        is_featured: false,
+        featured_rank: null,
+      })
+      .neq('sku', sku)
+      .eq('featured_rank', 1);
+  }
+
   const { error } = await db
     .from('products')
     .update({

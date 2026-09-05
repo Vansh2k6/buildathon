@@ -137,7 +137,9 @@ AGENT_BUYER_KEY=demo-agent-key
 - `npm run build`: Build production application bundle.
 - `npm run start`: Start production server.
 - `npm run typecheck`: Run TypeScript compiler validation without emitting files.
-- `npm run observe:buyer`: Run the AI buyer discovery and automated order placement script.
+- `npm run buyer:normal`: Run normal AI buyer agent (places on-policy order & generates Razorpay payment link).
+- `npm run buyer:max-qty`: Run over-quantity AI buyer agent (tests threshold violation & policy engine rejection).
+- `npm run observe:buyer`: Run end-to-end full verification suite.
 
 ## API Endpoints
 

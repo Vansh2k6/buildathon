@@ -71,9 +71,11 @@ export function renderPolicyTemplate(verdict: Verdict, isRetry = false): string 
 }
 
 export function renderExecuteTemplate(
-  execution: {
-    sku: string;
-    discount_pct?: number;
+  execution?: {
+    sku?: string | null;
+    action?: string;
+    discount_pct?: number | null;
+    featured_rank?: number | null;
     old_price_p?: number;
     new_price_p?: number;
     razorpay_ref_kind?: string;
@@ -81,10 +83,18 @@ export function renderExecuteTemplate(
     degraded?: boolean;
     error?: string;
     stubbed?: boolean;
-  },
+  } | null,
 ): string {
+  if (!execution || execution.action === 'no_action' || (!execution.sku && !execution.discount_pct && !execution.featured_rank)) {
+    return 'Execution verified: no action taken, storefront unchanged.';
+  }
+
+  if (execution.action === 'feature' || (execution.sku && execution.featured_rank && !execution.discount_pct)) {
+    return `Promoted ${execution.sku} to storefront featured hero (rank ${execution.featured_rank ?? 1}).`;
+  }
+
   if (execution.stubbed) {
-    return `[STUBBED] Execution verified for ${execution.sku} (${execution.discount_pct ?? 0}% discount).`;
+    return `[STUBBED] Execution verified for ${execution.sku ?? 'product'} (${execution.discount_pct ?? 0}% discount).`;
   }
 
   const refKind = execution.razorpay_ref_kind ?? 'payment_link';

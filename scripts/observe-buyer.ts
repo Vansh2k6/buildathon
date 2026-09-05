@@ -145,11 +145,6 @@ async function main(): Promise<void> {
       throw e;
     }
   }
-
-  header('WHAT YOU CAN NOW SEE IN THE BROWSER');
-  console.log('  • http://localhost:3000/audit        → the AI buyer run, tagged `ai_buyer`');
-  console.log('  • http://localhost:3000/             → storefront unchanged (buyer does not write discounts)');
-  console.log('  • Razorpay test dashboard            → payment_link row matching razorpay_short_url');
 }
 
 main().catch((e) => {

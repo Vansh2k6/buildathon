@@ -19,7 +19,7 @@ export default async function PolicyPage() {
       <div style={{ marginBottom: '28px' }}>
         <h1 className="page-title">Merchant Safety Policy Engine</h1>
         <p className="page-sub">
-          The merchant-owned rule row in Supabase (<code>merchant_policy</code>). Inspect active invariants or fine-tune safety thresholds in real-time.
+          Configure safety guardrails, discount limits, and automated merchandising rules in real-time.
         </p>
       </div>
 
