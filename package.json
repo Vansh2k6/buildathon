@@ -7,13 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "probe:razorpay": "tsx scripts/smoke-razorpay.ts",
-    "probe:news": "tsx scripts/smoke-news.ts",
-    "probe:groq": "tsx scripts/smoke-groq.ts",
-    "books:import": "tsx scripts/import-books.ts",
-    "observe:internal": "tsx scripts/observe-internal.ts",
-    "observe:external": "tsx scripts/observe-external.ts",
-    "observe:buyer": "tsx scripts/observe-buyer.ts"
+    "observe:buyer": "tsx scripts/observe-buyer.ts",
+    "db:push-reset": "tsx scripts/push-demo-reset.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
