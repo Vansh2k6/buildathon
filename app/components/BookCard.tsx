@@ -47,7 +47,7 @@ export function BookCard({ book }: { book: Book }) {
                 <span className="price-old">{formatInr(book.price_p)}</span>
               </>
             ) : (
-              <span className="price-sale" style={{ color: 'var(--text-main)' }}>{formatInr(book.price_p)}</span>
+              <span className="price-sale" style={{ color: 'var(--text-primary)' }}>{formatInr(book.price_p)}</span>
             )}
           </div>
           <span className={`stock-pill ${lowStock ? 'stock-low' : ''}`}>

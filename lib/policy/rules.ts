@@ -42,6 +42,26 @@ export interface BuyerFacts {
 
 export { effectivePriceP };
 
+/** Default merchant policy limits (matches db/001_schema.sql column defaults). */
+export const DEFAULT_POLICY_LIMITS = {
+  max_discount_pct: 20,
+  min_margin_pct: 15,
+  max_active_discounts: 3,
+  max_actions_per_day: 5,
+  daily_discount_budget_p: 500000,
+  max_featured_slots: 4,
+  cooldown_days: 1,
+  blocked_categories: [] as string[],
+  buyer_max_order_p: 2500000,
+  buyer_max_qty_per_sku: 5,
+} as const;
+
+/** Default buyer-only limits (subset of MerchantPolicyLimits). */
+export const DEFAULT_BUYER_POLICY_LIMITS = {
+  buyer_max_order_p: DEFAULT_POLICY_LIMITS.buyer_max_order_p,
+  buyer_max_qty_per_sku: DEFAULT_POLICY_LIMITS.buyer_max_qty_per_sku,
+} as const;
+
 /** AGENT.md §5.3 — projected give-away for one new discount, in paise. */
 export function projectedGiveawayP(priceP: number, discountPct: number, recentDailyOrders: number[]): {
   expectedUnits: number;
@@ -161,7 +181,7 @@ export const AGENT_RULES: AgentRule[] = [
     id: 'COOLDOWN',
     applies: (p) => DISCOUNT_ACTIONS.has(p.action),
     check: (p, policy, facts) => {
-      const last = facts.last_discount_day;
+      const last = facts.last_discount_day_for_sku(p.sku as string);
       if (last === null) return null;
       const gap = facts.current_day - last;
       return gap > policy.cooldown_days
@@ -190,7 +210,7 @@ export const AGENT_RULES: AgentRule[] = [
     applies: (p) => DISCOUNT_ACTIONS.has(p.action),
     check: (p, policy, facts) => {
       const product = facts.catalog[p.sku as string];
-      const { expectedUnits, projectedP } = projectedGiveawayP(product.price_p, p.discount_pct as number, facts.recent_daily_orders);
+      const { expectedUnits, projectedP } = projectedGiveawayP(product.price_p, p.discount_pct as number, facts.recent_daily_orders_for_sku(p.sku as string));
       return facts.spent_today_p + projectedP <= policy.daily_discount_budget_p
         ? null
         : {

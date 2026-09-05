@@ -17,6 +17,9 @@ export async function executeFeatured(
   opts?: { db?: SupabaseClient },
 ): Promise<FeaturedExecutionResult> {
   const db = opts?.db ?? serverAdmin();
+  if (approved.kind !== 'feature' && approved.kind !== 'discount_and_feature') {
+    throw new Error('Approved action is not a feature action');
+  }
   const sku = approved.sku;
   const rank = approved.featured_rank ?? 1;
 

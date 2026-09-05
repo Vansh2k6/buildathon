@@ -30,12 +30,11 @@ export async function executeDiscount(
   },
 ): Promise<DiscountExecutionResult> {
   const db = opts?.db ?? serverAdmin();
+  if (approved.kind !== 'discount' && approved.kind !== 'discount_and_feature') {
+    throw new Error('Approved action is not a discount action');
+  }
   const sku = approved.sku;
   const discountPct = approved.discount_pct;
-
-  if (!sku || discountPct === undefined) {
-    throw new Error('Approved discount action must specify sku and discount_pct');
-  }
 
   // 1. Fetch product row
   const { data: product, error: pErr } = await db

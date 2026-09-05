@@ -6,7 +6,8 @@
  * prices are computed here, never taken from the buyer (BUYER_PRICE_INTEGRITY).
  */
 import { effectivePriceP } from '../money';
-import { BUYER_RULES, orderTotalP } from './rules';
+import { BUYER_RULES, orderTotalP, DEFAULT_BUYER_POLICY_LIMITS } from './rules';
+export { DEFAULT_BUYER_POLICY_LIMITS };
 import { approve, type ApprovedAction, type BuyerOrderProposal, type MerchantPolicyLimits, type RuleId, type Verdict } from './types';
 import type { BuyerFacts } from './rules';
 

@@ -1,30 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* HSL Color Palette */
-  --bg-base: #0f1219;
-  --bg-surface: #181d28;
-  --bg-surface-hover: #222938;
-  --bg-glass: rgba(24, 29, 40, 0.75);
-  --bg-elevated: #262e3f;
+  /* ============================================================
+     COLOUR CONTROL SURFACE — the ONLY place hex values live.
+     Change a value here → it propagates to every component.
+     Source: reference.md §2 (Verdant Editorial).
+     ============================================================ */
 
-  --accent-amber: #f59e0b;
-  --accent-terracotta: #e06d24;
-  --accent-emerald: #10b981;
-  --accent-crimson: #ef4444;
-  --accent-sky: #38bdf8;
+  /* — Brand scale (emerald) — */
+  --green-50:  #ecfdf5;   --green-100: #d1fae5;  --green-200: #a7f3d0;
+  --green-300: #6ee7b7;   --green-400: #34d399;  --green-500: #10b981;
+  --green-600: #059669;   --green-700: #047857;  --green-800: #065f46;
+  --green-900: #064e3b;
 
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  /* — Accent hues (semantic, not decorative) — */
+  --orange: #f59e0b;   /* rejected runs, low stock, ratings — NOT an error (§6) */
+  --red:    #ef4444;   /* genuine failure ONLY (§6) */
+  --yellow: #eab308;   /* star ratings */
+  --blue:   #0ea5e9;   /* info, no_signal, edit actions */
+  --gray:   #6b7280;   /* source:fallback tag, muted provenance */
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-bright: rgba(245, 158, 11, 0.3);
-  --border-danger: rgba(239, 68, 68, 0.4);
+  /* — Surfaces / text / borders — */
+  --bg-primary:    #f6fbf8;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #edf7f1;
+  --glass:         rgba(255,255,255,0.75);
+  --glass-border:  rgba(5,150,105,0.08);
+  --text-primary:   #0a1a12;
+  --text-secondary: #2d4a3b;
+  --text-muted:     #7a9a88;
+  --border:        rgba(5,150,105,0.12);
+  --border-hover:  rgba(5,150,105,0.25);
 
+  /* ============================================================
+     SEMANTIC ALIASES — components reference THESE, not raw hex.
+     ============================================================ */
+  --accent:       var(--green-600);
+  --accent-hover: var(--green-700);
+  --accent-glow:  rgba(5,150,105,0.25);
+  --accent-soft:  rgba(5,150,105,0.08);
+
+  /* status chips (§6) — fg + bg pairs */
+  --status-executed-fg: var(--green-700);  --status-executed-bg: var(--green-50);
+  --status-rejected-fg: var(--orange);     --status-rejected-bg: #fef3e2;   /* warm, NOT red */
+  --status-failed-fg:   var(--red);        --status-failed-bg:   #fdecea;
+  --status-nosignal-fg: var(--blue);       --status-nosignal-bg: #e8f6fd;
+  --status-running-fg:  var(--text-muted);
+
+  /* fonts */
   --font-display: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }
 
 * {
@@ -34,8 +60,8 @@
 }
 
 body {
-  background-color: var(--bg-base);
-  color: var(--text-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.5;
   min-height: 100vh;
@@ -52,10 +78,10 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg-glass);
+  background: var(--glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border);
   padding: 16px 32px;
 }
 
@@ -75,12 +101,12 @@ a {
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: -0.02em;
-  color: var(--text-main);
+  color: var(--text-primary);
 }
 
 .brand-badge {
-  background: linear-gradient(135deg, var(--accent-terracotta), var(--accent-amber));
-  color: #000;
+  background: var(--accent);
+  color: #fff;
   font-size: 0.7rem;
   font-weight: 800;
   padding: 2px 8px;
@@ -98,7 +124,7 @@ a {
 .nav-link {
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
   padding: 6px 12px;
   border-radius: 6px;
@@ -106,8 +132,8 @@ a {
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--text-main);
-  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
 }
 
 /* Layout Container */
@@ -130,15 +156,15 @@ h1, h2, h3, h4 {
 }
 
 .page-sub {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 1rem;
   margin-bottom: 32px;
 }
 
 /* Badges & Pills */
 .badge-discount {
-  background: var(--accent-amber);
-  color: #000;
+  background: var(--green-50);
+  color: var(--green-600);
   font-weight: 700;
   font-size: 0.8rem;
   padding: 3px 8px;
@@ -147,9 +173,9 @@ h1, h2, h3, h4 {
 }
 
 .badge-featured {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-sky);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: var(--green-50);
+  color: var(--green-500);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 2px 8px;
@@ -169,34 +195,40 @@ h1, h2, h3, h4 {
 }
 
 .badge-executed, .badge-approved {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--accent-emerald);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: var(--status-executed-bg);
+  color: var(--status-executed-fg);
+  border: 1px solid rgba(5, 150, 105, 0.25);
 }
 
-.badge-rejected, .badge-blocked, .badge-failed {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--accent-crimson);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+.badge-rejected, .badge-blocked {
+  background: var(--status-rejected-bg);
+  color: var(--status-rejected-fg);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.badge-failed {
+  background: var(--status-failed-bg);
+  color: var(--status-failed-fg);
+  border: 1px solid rgba(239, 68, 68, 0.25);
 }
 
 .badge-running, .badge-retry {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--accent-amber);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--accent-soft);
+  color: var(--status-running-fg);
+  border: 1px solid var(--border);
 }
 
 /* Glassmorphism Cards */
 .glass-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-card:hover {
-  border-color: var(--border-bright);
+  border-color: var(--border-hover);
 }
 
 /* Book Grid & Cards */
@@ -207,8 +239,8 @@ h1, h2, h3, h4 {
 }
 
 .book-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -218,21 +250,21 @@ h1, h2, h3, h4 {
 
 .book-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-bright);
+  border-color: var(--border-hover);
 }
 
 .book-cover {
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: linear-gradient(135deg, var(--green-50), var(--bg-card-hover));
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--accent-amber);
+  color: var(--green-600);
 }
 
 .book-info {
@@ -247,11 +279,12 @@ h1, h2, h3, h4 {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
+  color: var(--text-primary);
 }
 
 .book-author {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .book-meta {
@@ -260,7 +293,7 @@ h1, h2, h3, h4 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border);
 }
 
 .price-box {
@@ -272,25 +305,25 @@ h1, h2, h3, h4 {
 .price-sale {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--accent-emerald);
+  color: var(--text-primary);
   font-family: var(--font-mono);
 }
 
 .price-old {
   font-size: 0.9rem;
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-decoration: line-through;
   font-family: var(--font-mono);
 }
 
 .stock-pill {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-family: var(--font-mono);
 }
 
 .stock-low {
-  color: var(--accent-amber);
+  color: var(--orange);
   font-weight: 600;
 }
 
@@ -311,30 +344,30 @@ h1, h2, h3, h4 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-terracotta), var(--accent-amber));
-  color: #000;
+  background: var(--accent);
+  color: #fff;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: var(--accent-hover);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: var(--bg-surface-hover);
-  color: var(--text-main);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
-  border-color: var(--border-bright);
+  border-color: var(--border-hover);
 }
 
 /* Flagship Rejection Callout Box */
 .rejection-banner {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.04));
-  border: 1px solid var(--border-danger);
-  box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+  background: linear-gradient(135deg, var(--status-rejected-bg), rgba(245, 158, 11, 0.04));
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
   border-radius: 12px;
   padding: 24px;
   margin: 16px 0;
@@ -348,7 +381,7 @@ h1, h2, h3, h4 {
 }
 
 .rejection-title {
-  color: var(--accent-crimson);
+  color: var(--orange);
   font-size: 1.2rem;
   font-weight: 700;
   display: flex;
@@ -359,7 +392,7 @@ h1, h2, h3, h4 {
 .rejection-comparison {
   display: flex;
   gap: 24px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--green-50);
   padding: 14px 18px;
   border-radius: 8px;
   font-family: var(--font-mono);

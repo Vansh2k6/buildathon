@@ -54,7 +54,7 @@ export async function buildWorldFacts(
   // 1. Fetch catalog
   const { data: pRows, error: pErr } = await db
     .from('products')
-    .select('id, sku, category, price_p, cost_p, inventory, is_featured');
+    .select('id, sku, name, category, price_p, cost_p, inventory, is_featured, featured_rank');
   if (pErr) throw new Error(`Failed to fetch products for facts: ${pErr.message}`);
 
   const { data: dRows, error: dErr } = await db
@@ -72,28 +72,38 @@ export async function buildWorldFacts(
   for (const p of pRows ?? []) {
     const fact: ProductFact = {
       sku: p.sku,
+      name: p.name,
       category: p.category,
       price_p: p.price_p,
       cost_p: p.cost_p,
       inventory: p.inventory,
       is_featured: p.is_featured,
+      featured_rank: p.featured_rank,
       active_discount_pct: activeMap.get(p.id) ?? null,
     };
     catalogMap[p.sku] = fact;
     catalogList.push(fact);
   }
 
-  // 2. Active discount count & last discount day
+  // 2. Active discount count & per-SKU last discount day (P2b: AGENT.md §5.1 #8)
   const active_discount_count = dRows?.length ?? 0;
 
-  const { data: lastDisc } = await db
-    .from('discounts')
-    .select('created_day_index')
-    .order('created_day_index', { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Build a product_id → sku map for joining
+  const idToSku = new Map<string, string>();
+  for (const p of pRows ?? []) idToSku.set(p.id, p.sku);
 
-  const last_discount_day = lastDisc?.created_day_index ?? null;
+  const { data: allDiscDays } = await db
+    .from('discounts')
+    .select('product_id, created_day_index')
+    .order('created_day_index', { ascending: false });
+
+  const skuLastDiscountDay = new Map<string, number>();
+  for (const d of allDiscDays ?? []) {
+    const sku = idToSku.get(d.product_id);
+    if (sku && !skuLastDiscountDay.has(sku)) {
+      skuLastDiscountDay.set(sku, d.created_day_index);
+    }
+  }
 
   // 3. Executed runs today
   const { data: todayRuns } = await db
@@ -115,16 +125,37 @@ export async function buildWorldFacts(
   // 5. Featured count
   const featuredCount = catalogList.filter((p) => p.is_featured).length;
 
-  // 6. Recent daily orders (default 4 orders/day for fallback estimate)
-  const recent_daily_orders = [4, 4, 4, 4, 4, 4, 4];
+  // 6. Per-SKU recent daily orders (P0: AGENT.md §5.3 — orders(p, i) for i in [d-6, d])
+  const startDayRecent = Math.max(0, currentDay - 6);
+  const { data: recentMetrics } = await db
+    .from('product_metrics_daily')
+    .select('product_id, day_index, orders')
+    .gte('day_index', startDayRecent)
+    .lte('day_index', currentDay)
+    .order('day_index');
+
+  // Build Map<sku, Map<dayIndex, orders>>
+  const skuDayOrders = new Map<string, Map<number, number>>();
+  for (const m of recentMetrics ?? []) {
+    const sku = idToSku.get(m.product_id);
+    if (!sku) continue;
+    let dayMap = skuDayOrders.get(sku);
+    if (!dayMap) { dayMap = new Map(); skuDayOrders.set(sku, dayMap); }
+    dayMap.set(m.day_index, (dayMap.get(m.day_index) ?? 0) + m.orders);
+  }
 
   const facts: AgentWorldFacts = {
     catalog: catalogMap,
     active_discount_count,
-    last_discount_day,
+    last_discount_day_for_sku: (sku: string) => skuLastDiscountDay.get(sku) ?? null,
     executed_runs_today,
     spent_today_p,
-    recent_daily_orders,
+    recent_daily_orders_for_sku: (sku: string) => {
+      const dayMap = skuDayOrders.get(sku);
+      return Array.from({ length: 7 }, (_, i) =>
+        dayMap?.get(startDayRecent + i) ?? 0
+      );
+    },
     current_day: currentDay,
     featuredCountAfter: (p) => (p.is_featured ? featuredCount : featuredCount + 1),
   };
@@ -176,8 +207,10 @@ export async function runAgentCycle(
   const executeStubbed = opts?.executeStubbed ?? true;
 
   // Resolve current day
-  let currentDay = opts?.dayIndexOverride;
-  if (currentDay === undefined) {
+  let currentDay: number;
+  if (opts?.dayIndexOverride !== undefined) {
+    currentDay = opts.dayIndexOverride;
+  } else {
     const { data: sim } = await db.from('sim_state').select('current_day_index').eq('id', 1).single();
     currentDay = sim?.current_day_index ?? 0;
   }
@@ -186,6 +219,7 @@ export async function runAgentCycle(
   const runId = await createAgentRun(db, trigger, currentDay);
   let seq = 1;
 
+  try {
   // ── PHASE 1: OBSERVE ───────────────────────────────────────────────────
   let signal: Signal | null = null;
   if (trigger === 'internal') {
@@ -339,10 +373,12 @@ export async function runAgentCycle(
   let executionPayload: any = null;
 
   if (executeStubbed) {
+    const sku = (approved.kind === 'discount' || approved.kind === 'feature' || approved.kind === 'discount_and_feature') ? approved.sku : null;
+    const discount_pct = (approved.kind === 'discount' || approved.kind === 'discount_and_feature') ? approved.discount_pct : null;
     executionPayload = {
-      sku: approved.sku,
+      sku,
       action: approved.kind,
-      discount_pct: approved.discount_pct,
+      discount_pct,
       stubbed: true,
     };
   } else {
@@ -366,8 +402,10 @@ export async function runAgentCycle(
 
   // ── PHASE 5: RESULT ────────────────────────────────────────────────────
   const elapsed = Date.now() - startTime;
-  let summary = approved.sku ? `${approved.sku}` : 'action';
-  if (approved.discount_pct) summary += ` at ${approved.discount_pct}% discount`;
+  const targetSku = (approved.kind === 'discount' || approved.kind === 'feature' || approved.kind === 'discount_and_feature') ? approved.sku : null;
+  const targetDisc = (approved.kind === 'discount' || approved.kind === 'discount_and_feature') ? approved.discount_pct : null;
+  let summary = targetSku ? `${targetSku}` : 'action';
+  if (targetDisc) summary += ` at ${targetDisc}% discount`;
 
   const resMsg = renderResultTemplate('executed', elapsed, summary);
   await logAgentEvent(db, runId, seq++, 'result', 'info', resMsg);
@@ -390,4 +428,20 @@ export async function runAgentCycle(
     verdict,
     execution: executionPayload,
   };
+
+  } catch (err: any) {
+    // P2a: ensure every run ends in a terminal status — never strand RUNNING
+    const errMsg = err?.message ?? String(err);
+    try {
+      await logAgentEvent(db, runId, seq++, 'result', 'error', `Unhandled error: ${errMsg}`);
+      const allEvents = await fetchRunEvents(db, runId);
+      const narrative = renderRunNarrative(allEvents);
+      await updateAgentRun(db, runId, {
+        status: 'failed',
+        narrative,
+        finished_at: new Date().toISOString(),
+      });
+    } catch { /* best-effort finalization */ }
+    throw err;
+  }
 }

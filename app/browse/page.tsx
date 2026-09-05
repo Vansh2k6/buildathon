@@ -43,9 +43,9 @@ export default async function BrowsePage({ searchParams }: { searchParams: Searc
               flex: '1 1 240px',
               padding: '10px 14px',
               borderRadius: '6px',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-base)',
-              color: 'var(--text-main)',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-card)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-body)',
             }}
           />
@@ -55,9 +55,9 @@ export default async function BrowsePage({ searchParams }: { searchParams: Searc
             style={{
               padding: '10px 14px',
               borderRadius: '6px',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-base)',
-              color: 'var(--text-main)',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-card)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-body)',
             }}
           >
@@ -75,9 +75,9 @@ export default async function BrowsePage({ searchParams }: { searchParams: Searc
             style={{
               padding: '10px 14px',
               borderRadius: '6px',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-base)',
-              color: 'var(--text-main)',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-card)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-body)',
             }}
           >

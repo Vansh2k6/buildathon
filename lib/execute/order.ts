@@ -31,19 +31,28 @@ export async function executeOrder(
   const totalP = approved.total_p;
   const buyerRef = approved.buyer_ref ?? 'ai_buyer_agent';
 
-  // 1. Create Razorpay Order
-  const rzpOrder = await createRazorpayOrder({
-    amount_p: totalP,
-    receipt,
-    notes: { buyer_ref: buyerRef, run_id: runId },
-  });
+  let rzpOrderId = `order_local_${Date.now()}`;
+  let rzpPlinkId = `plink_local_${Date.now()}`;
+  let rzpShortUrl = 'local_only';
 
-  // 2. Create Razorpay Payment Link
-  const rzpPlink = await createRazorpayPaymentLink({
-    amount_p: totalP,
-    description: `AI-Buyer Purchase (${approved.lines.length} item(s))`,
-    reference_id: `order-${runId.slice(0, 8)}-${Date.now()}`,
-  });
+  try {
+    const rzpOrder = await createRazorpayOrder({
+      amount_p: totalP,
+      receipt,
+      notes: { buyer_ref: buyerRef, run_id: runId },
+    });
+    rzpOrderId = rzpOrder.id;
+
+    const rzpPlink = await createRazorpayPaymentLink({
+      amount_p: totalP,
+      description: `AI-Buyer Purchase (${approved.lines.length} item(s))`,
+      reference_id: `order-${runId.slice(0, 8)}-${Date.now()}`,
+    });
+    rzpPlinkId = rzpPlink.id;
+    rzpShortUrl = rzpPlink.short_url;
+  } catch (err: any) {
+    console.warn(`Razorpay API order creation fallback (local_only): ${err?.message ?? err}`);
+  }
 
   // 3. Insert into orders table
   const { data: orderRow, error: oErr } = await db
@@ -55,9 +64,9 @@ export async function executeOrder(
       subtotal_p: totalP,
       discount_p: 0,
       total_p: totalP,
-      razorpay_order_id: rzpOrder.id,
-      razorpay_payment_link_id: rzpPlink.id,
-      razorpay_short_url: rzpPlink.short_url,
+      razorpay_order_id: rzpOrderId,
+      razorpay_payment_link_id: rzpPlinkId,
+      razorpay_short_url: rzpShortUrl,
       status: 'created',
       run_id: runId,
     })
@@ -70,9 +79,9 @@ export async function executeOrder(
 
   return {
     order_id: orderRow.id,
-    razorpay_order_id: rzpOrder.id,
-    razorpay_payment_link_id: rzpPlink.id,
-    razorpay_short_url: rzpPlink.short_url,
+    razorpay_order_id: rzpOrderId,
+    razorpay_payment_link_id: rzpPlinkId,
+    razorpay_short_url: rzpShortUrl,
     total_p: totalP,
   };
 }

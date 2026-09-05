@@ -109,10 +109,10 @@ export default function ControlPage() {
       {/* Clock Widget */}
       <div className="glass-card" style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             SIMULATED TIME CLOCK
           </span>
-          <div style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', marginTop: '4px' }}>
+          <div style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--accent)', marginTop: '4px' }}>
             {dayIndex !== null ? `Day ${dayIndex}` : 'Day ...'}
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function ControlPage() {
             onClick={handleAdvanceDay}
             disabled={loading}
           >
-            {activeAction === 'advance' ? 'Advancing...' : '⏩ Advance 1 Day'}
+            {activeAction === 'advance' ? 'Advancing...' : ' Advance 1 Day'}
           </button>
         </div>
       </div>
@@ -132,46 +132,46 @@ export default function ControlPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '32px' }}>
         <div className="glass-card">
           <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Internal Detector Cycle</h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
             Scans Supabase conversion metrics & dead stock. On Day 8, fires conversion drop signal on BK-101.
           </p>
           <button
             className="btn btn-secondary"
-            style={{ width: '100%', borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)' }}
+            style={{ width: '100%', borderColor: 'var(--accent)', color: 'var(--accent)' }}
             onClick={() => handleRunCycle('internal')}
             disabled={loading}
           >
-            {activeAction === 'cycle-internal' ? 'Running Cycle...' : '🔍 Run Internal Cycle'}
+            {activeAction === 'cycle-internal' ? 'Running Cycle...' : ' Run Internal Cycle'}
           </button>
         </div>
 
         <div className="glass-card">
           <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>External Detector Cycle</h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
             Fetches live headlines from NewsAPI.org. Matches trending news keywords to catalog book themes.
           </p>
           <button
             className="btn btn-secondary"
-            style={{ width: '100%', borderColor: 'var(--accent-sky)', color: 'var(--accent-sky)' }}
+            style={{ width: '100%', borderColor: 'var(--blue)', color: 'var(--blue)' }}
             onClick={() => handleRunCycle('external')}
             disabled={loading}
           >
-            {activeAction === 'cycle-external' ? 'Running Cycle...' : '🌐 Run External Cycle'}
+            {activeAction === 'cycle-external' ? 'Running Cycle...' : ' Run External Cycle'}
           </button>
         </div>
 
         <div className="glass-card">
           <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Reset Simulation</h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
             Resets simulation to Day 0, clears discounts & agent runs, and restores fixture inventory.
           </p>
           <button
             className="btn btn-secondary"
-            style={{ width: '100%', borderColor: 'var(--accent-crimson)', color: 'var(--accent-crimson)' }}
+            style={{ width: '100%', borderColor: 'var(--text-muted)', color: 'var(--text-muted)' }}
             onClick={handleReset}
             disabled={loading}
           >
-            {activeAction === 'reset' ? 'Resetting...' : '🔄 Reset to Day 0'}
+            {activeAction === 'reset' ? 'Resetting...' : ' Reset to Day 0'}
           </button>
         </div>
       </div>
@@ -192,7 +192,7 @@ export default function ControlPage() {
           </div>
 
           {lastResult.narrative && (
-            <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-main)', background: 'rgba(0,0,0,0.3)', padding: '16px', borderRadius: '8px', whitespace: 'pre-wrap' }}>
+            <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-primary)', background: 'var(--green-50)', padding: '16px', borderRadius: '8px', whiteSpace: 'pre-wrap' }}>
               {lastResult.narrative}
             </pre>
           )}
@@ -201,12 +201,12 @@ export default function ControlPage() {
 
       {/* Real-time Activity Terminal Log */}
       <div className="glass-card">
-        <h3 style={{ fontSize: '1rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: '1rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
           Real-time Activity Log
         </h3>
-        <div style={{ background: '#090d16', padding: '16px', borderRadius: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', minHeight: '120px', color: 'var(--accent-emerald)' }}>
+        <div style={{ background: 'var(--green-900)', padding: '16px', borderRadius: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', minHeight: '120px', color: 'var(--green-100)' }}>
           {logs.length === 0 ? (
-            <span style={{ color: 'var(--text-dim)' }}>No activity yet. Click a button above to execute simulation actions.</span>
+            <span style={{ color: 'var(--text-muted)' }}>No activity yet. Click a button above to execute simulation actions.</span>
           ) : (
             logs.map((l, idx) => <div key={idx}>{l}</div>)
           )}

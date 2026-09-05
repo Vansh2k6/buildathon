@@ -10,7 +10,7 @@ export function Navbar() {
     <header className="navbar">
       <div className="navbar-inner">
         <Link href="/" className="nav-brand">
-          <span>📚 MERCHANT-AGENT</span>
+          <span>MERCHANT-AGENT</span>
           <span className="brand-badge">Autonomous</span>
         </Link>
         <nav className="nav-links">

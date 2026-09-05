@@ -67,11 +67,13 @@ export interface MerchantPolicyLimits {
 /** The slice of catalog/world state a rule may look at. Supplied by the caller; policy never queries. */
 export interface ProductFact {
   sku: string;
+  name?: string;
   category: string;
   price_p: number;
   cost_p: number;
   inventory: number;
   is_featured: boolean;
+  featured_rank?: number | null;
   /** Active discount percentage, or null. Effective price derives from this. */
   active_discount_pct: number | null;
 }
@@ -81,14 +83,14 @@ export interface AgentWorldFacts {
   catalog: Record<string, ProductFact>;
   /** Store-wide count of currently active discounts. */
   active_discount_count: number;
-  /** Day index of the most recent discount created for the proposed sku, or null. */
-  last_discount_day: number | null;
+  /** Day index of the most recent discount created for a given SKU, or null. Per-SKU (AGENT.md §5.1 #8). */
+  last_discount_day_for_sku: (sku: string) => number | null;
   /** Agent actions executed so far today. */
   executed_runs_today: number;
   /** Projected give-away already committed today, in paise. */
   spent_today_p: number;
-  /** Orders per day for days d-6..d (7 values, oldest first) — budget estimator input. */
-  recent_daily_orders: number[];
+  /** Per-SKU orders per day for days [d-6..d] (7 values, oldest first) — budget estimator input (AGENT.md §5.3). */
+  recent_daily_orders_for_sku: (sku: string) => number[];
   /** Current simulated day index. */
   current_day: number;
   /** Featured count after this action (engine supplies the closure: +1 when the action features a non-featured product). */

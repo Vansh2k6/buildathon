@@ -35,7 +35,7 @@ export default async function Home() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--accent-amber)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '0.85rem', color: 'var(--accent)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
                   {hero.category}
                 </span>
                 <h1 style={{ fontSize: '2.5rem', lineHeight: '1.2', marginTop: '4px', marginBottom: '8px' }}>
@@ -46,7 +46,7 @@ export default async function Home() {
                 </p>
               </div>
 
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', lineHeight: '1.6' }}>
                 {hero.description}
               </p>
 

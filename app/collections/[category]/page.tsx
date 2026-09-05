@@ -22,7 +22,7 @@ export default async function CollectionPage({ params }: { params: Params }) {
   return (
     <main className="container">
       <div style={{ marginBottom: '24px' }}>
-        <Link href="/browse" style={{ fontSize: '0.85rem', color: 'var(--accent-amber)', fontFamily: 'var(--font-mono)' }}>
+        <Link href="/browse" style={{ fontSize: '0.85rem', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>
           ← Back to All Collections
         </Link>
       </div>

@@ -78,7 +78,7 @@ export default async function AuditPage() {
           {runs.map((run) => {
             const isRejected = run.status === 'rejected' || run.verdict?.ok === false;
             const isExecuted = run.status === 'executed';
-            const story = run.narrative || renderRunNarrative(run.events);
+            const story = run.narrative || renderRunNarrative((run.events || []) as any);
 
             return (
               <div key={run.id} className="glass-card" style={{ position: 'relative' }}>
@@ -95,38 +95,53 @@ export default async function AuditPage() {
                       Day {run.day_index}
                     </span>
                   </div>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                     Run ID: {run.id.slice(0, 8)}...
                   </span>
                 </div>
 
                 {/* Flagship Rejection Callout Box (Submission Centrepiece) */}
-                {isRejected && run.verdict && (
+                {isRejected && run.verdict && (() => {
+                  // P1a: format value/limit per rule type
+                  const rule = run.verdict.rule ?? '';
+                  const PCT_RULES = ['MAX_DISCOUNT_PCT', 'MIN_MARGIN_PCT'];
+                  const INR_RULES = ['DAILY_DISCOUNT_BUDGET', 'BUYER_MAX_ORDER'];
+                  const DAY_RULES = ['COOLDOWN'];
+
+                  const fmt = (v: any) => {
+                    if (v === undefined || v === null) return '—';
+                    if (PCT_RULES.includes(rule)) return `${v}%`;
+                    if (INR_RULES.includes(rule)) return `₹${(Number(v) / 100).toLocaleString('en-IN')}`;
+                    if (DAY_RULES.includes(rule)) return `${v}d`;
+                    return String(v);
+                  };
+
+                  return (
                   <div className="rejection-banner">
                     <div className="rejection-header">
                       <div className="rejection-title">
-                        <span>🛡️ PROPOSAL REJECTED BY POLICY ENGINE</span>
+                        <span>Policy check held the line</span>
                       </div>
                       <span className="badge-status badge-blocked">
-                        RULE: {run.verdict.rule}
+                        RULE: {rule}
                       </span>
                     </div>
 
-                    <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', margin: '8px 0' }}>
-                      {run.verdict.detail?.reason || 'Proposal exceeded merchant safety policy.'}
+                    <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', margin: '8px 0' }}>
+                      {run.verdict.message || 'Proposal exceeded merchant safety policy.'}
                     </p>
 
                     <div className="rejection-comparison">
                       <div>
                         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>PROPOSED BY LLM:</span>
-                        <div style={{ color: 'var(--accent-crimson)', fontWeight: '700', fontSize: '1.1rem' }}>
-                          {run.verdict.detail?.value !== undefined ? `${run.verdict.detail.value}%` : 'Off-policy'}
+                        <div style={{ color: 'var(--orange)', fontWeight: '700', fontSize: '1.1rem' }}>
+                          {run.verdict.detail?.value !== undefined ? fmt(run.verdict.detail.value) : 'Off-policy'}
                         </div>
                       </div>
-                      <div style={{ borderLeft: '1px solid var(--border-subtle)', paddingLeft: '24px' }}>
+                      <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '24px' }}>
                         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>MERCHANT POLICY CEILING:</span>
-                        <div style={{ color: 'var(--accent-emerald)', fontWeight: '700', fontSize: '1.1rem' }}>
-                          {run.verdict.detail?.limit !== undefined ? `${run.verdict.detail.limit}%` : 'Ceiling Enforced'}
+                        <div style={{ color: 'var(--accent)', fontWeight: '700', fontSize: '1.1rem' }}>
+                          {run.verdict.detail?.limit !== undefined ? fmt(run.verdict.detail.limit) : 'Ceiling Enforced'}
                         </div>
                       </div>
                     </div>
@@ -135,29 +150,30 @@ export default async function AuditPage() {
                       ⚡ Bounded Autonomy: The model was never disclosed the policy ceiling in its prompt. Deterministic code enforced the limit and refused the action.
                     </p>
                   </div>
-                )}
+                  );
+                })()}
 
                 {/* Retry Turn Block */}
                 {run.proposal_retry && (
-                  <div style={{ background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: '8px', padding: '16px', margin: '16px 0' }}>
+                  <div style={{ background: 'var(--accent-soft)', border: '1px solid var(--border)', borderRadius: '8px', padding: '16px', margin: '16px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                       <span className="badge-status badge-retry">RETRY TURN (1 of 1)</span>
-                      <span style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--accent-amber)' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--orange)' }}>
                         Model re-proposed after feedback
                       </span>
                     </div>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', margin: 0 }}>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', margin: 0 }}>
                       Proposed updated discount: <strong>{run.proposal_retry.discount_pct}%</strong> on SKU {run.proposal_retry.sku}
                     </p>
                   </div>
                 )}
 
                 {/* Human Narrative Story */}
-                <div style={{ background: 'var(--bg-elevated)', borderRadius: '8px', padding: '16px', marginTop: '16px' }}>
+                <div style={{ background: 'var(--bg-card-hover)', borderRadius: '8px', padding: '16px', marginTop: '16px' }}>
                   <h4 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
                     Execution Narrative
                   </h4>
-                  <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-main)', whitespace: 'pre-wrap', lineHeight: '1.6' }}>
+                  <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-primary)', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
                     {story}
                   </pre>
                 </div>
@@ -169,13 +185,13 @@ export default async function AuditPage() {
                   </summary>
                   <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {run.events.map((ev) => (
-                      <div key={ev.id} style={{ background: 'rgba(0,0,0,0.2)', padding: '10px 14px', borderRadius: '6px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                      <div key={ev.id} style={{ background: 'var(--green-50)', padding: '10px 14px', borderRadius: '6px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
                         <div style={{ display: 'flex', gap: '12px', color: 'var(--text-muted)', marginBottom: '4px' }}>
                           <span>Seq #{ev.seq}</span>
-                          <span style={{ color: 'var(--accent-sky)' }}>[{ev.phase.toUpperCase()}]</span>
+                          <span style={{ color: 'var(--blue)' }}>[{ev.phase.toUpperCase()}]</span>
                           <span>{ev.level.toUpperCase()}</span>
                         </div>
-                        <div style={{ color: 'var(--text-main)' }}>{ev.message}</div>
+                        <div style={{ color: 'var(--text-primary)' }}>{ev.message}</div>
                       </div>
                     ))}
                   </div>
