@@ -21,6 +21,24 @@ md files/
 *.md
 !README.md
 
+# local test & verification scripts
+scripts/verify-*
+scripts/smoke-*
+scripts/deep-*
+scripts/edge-*
+scripts/apply-*
+scripts/ai-buyer-*
+scripts/import-*
+scripts/feature-*
+scripts/pick-*
+scripts/gen-*
+scripts/fetch-*
+scripts/aggressive-*
+scripts/agentic-*
+scripts/generate-*
+scripts/observe-internal*
+scripts/observe-external*
+
 # local logs
 dev-server.log
 *.log
