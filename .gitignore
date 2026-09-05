@@ -14,7 +14,12 @@ Thumbs.db
 
 # agent/session state & machine-local harness config
 .freebuff/
-.claude/settings.local.json
+.claude/
+.agents/
+graphify-out/
+md files/
+*.md
+!README.md
 
 # local logs
 dev-server.log
